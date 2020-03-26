@@ -41,7 +41,7 @@ namespace Band_Organizer
             }
         }
 
-        private static void InsertBandName(Band bandName)
+        public static void InsertBandName(Band bandName)
         {
             //BandAlbumTracksDataSetTableAdapters.BandsTableAdapter bandsTableAdapter =
             //    new BandAlbumTracksDataSetTableAdapters.BandsTableAdapter();
@@ -64,7 +64,7 @@ namespace Band_Organizer
             }
         }
 
-        private static void InsertAlbumName(Album albumTitle) 
+        public static void InsertAlbumName(Album albumTitle) 
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "INSERT INTO Albums ([Title], [ReleaseDate]) VALUES (@title, @releaseDate)";
@@ -85,7 +85,22 @@ namespace Band_Organizer
             }
         }
 
-        private static void InsertTrackName() { }
+        public static void InsertTrackName(Tracks trackTitle) 
+        {
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "INSERT INTO Tracks ([Title]) VALUES (@title)";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.Parameters.Add("@title", SqlDbType.NText);
+                    cmd.Parameters["@title"].Value = trackTitle.TrackTitle;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         private static void ClearAllData() { }
 

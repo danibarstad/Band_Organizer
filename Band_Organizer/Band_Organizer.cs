@@ -86,8 +86,11 @@ namespace Band_Organizer
             {
                 if (IsPresent(txtTrackName, "Track Name") && CheckIfSelected(lbAlbumList, lblAlbumName.Text))
                 {
+                    Tracks newTrack = new Tracks { TrackTitle = txtTrackName.Text };
                     // track name is added to the listbox then the textbox is cleared
                     lbTrackList.Items.Add(txtTrackName.Text);
+
+                    BandAlbumTrackDB.InsertTrackName(newTrack);
 
                     txtTrackName.Clear();
                     txtTrackName.Focus();
