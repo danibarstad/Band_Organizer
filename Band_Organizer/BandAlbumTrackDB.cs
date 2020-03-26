@@ -17,7 +17,7 @@ namespace Band_Organizer
             string str;
             SqlConnection conn = new SqlConnection("Server=localhost, Integrated Security=SSPI, database=master");
 
-            str = "CREATE DATABASE BandAlbumTracks ON PRIMARY " +
+            str = "IF NOT EXISTS CREATE DATABASE BandAlbumTracks ON PRIMARY " +
                 "(NAME = BandAlbumTracks_Data, " +
                 "FILENAME = 'C:\\BandAlbumTracks.mdf";
 
@@ -41,7 +41,7 @@ namespace Band_Organizer
             }
         }
 
-        public static void InsertBandName(Band bandName)
+        private static void InsertBandName(Band bandName)
         {
             //BandAlbumTracksDataSetTableAdapters.BandsTableAdapter bandsTableAdapter =
             //    new BandAlbumTracksDataSetTableAdapters.BandsTableAdapter();
@@ -64,7 +64,26 @@ namespace Band_Organizer
             }
         }
 
-        private static void InsertAlbumName() { }
+        private static void InsertAlbumName(Album albumTitle) 
+        {
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "INSERT INTO Albums ([Title], [ReleaseDate]) VALUES (@title, @releaseDate)";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.Parameters.Add("@title", SqlDbType.NText);
+                    cmd.Parameters["@title"].Value = albumTitle.AlbumTitle;
+
+                    cmd.Parameters.Add("@releaseDate", SqlDbType.Date);
+                    cmd.Parameters["@releaseDate"].Value = albumTitle.ReleaseDate;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         private static void InsertTrackName() { }
 
