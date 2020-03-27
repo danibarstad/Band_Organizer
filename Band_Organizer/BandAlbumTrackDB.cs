@@ -40,6 +40,23 @@ namespace Band_Organizer
             }
         }
 
+        private static void CreateTables()
+        {
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "CREATE TABLE IF NOT EXISTS Bands(id primary key, name char(50); " +
+                                    "CREATE TABLE IF NOT EXISTS Albums(id foreign key, title char(50);" +
+                                    "CREATE TABLE IF NOT EXISTS Tracks(id foreign key, title char(50)";
+
+            using(SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using(SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public static void InsertBandName(Band bandName)
         {
             //BandAlbumTracksDataSetTableAdapters.BandsTableAdapter bandsTableAdapter =
