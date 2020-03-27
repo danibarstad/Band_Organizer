@@ -14,10 +14,9 @@ namespace Band_Organizer
 
         private static void CreateDatabase()
         {
-            string str;
             SqlConnection conn = new SqlConnection("Server=localhost, Integrated Security=SSPI, database=master");
 
-            str = "IF NOT EXISTS CREATE DATABASE BandAlbumTracks ON PRIMARY " +
+            string str = "IF NOT EXISTS CREATE DATABASE BandAlbumTracks ON PRIMARY " +
                 "(NAME = BandAlbumTracks_Data, " +
                 "FILENAME = 'C:\\BandAlbumTracks.mdf";
 
@@ -102,7 +101,20 @@ namespace Band_Organizer
             }
         }
 
-        private static void ClearAllData() { }
+        public static void ClearAllData() 
+        {
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "DELETE FROM Bands; DELETE FROM Albums, DELETE FROM Tracks";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         private static void LoadData() { }
 

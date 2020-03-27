@@ -108,6 +108,8 @@ namespace Band_Organizer
         {
             if (ClearAllData())
             {
+                BandAlbumTrackDB.ClearAllData();
+
                 // clears all data from textboxes and listboxes
                 txtBandName.Clear();
                 txtAlbumName.Clear();
