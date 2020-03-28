@@ -14,28 +14,17 @@ namespace Band_Organizer
 
         private static void CreateDatabase()
         {
-            SqlConnection conn = new SqlConnection("Server=localhost, Integrated Security=SSPI, database=master");
+            string connString = "Server = localhost, Integrated Security = SSPI, database = master";
+            string sqlStatement = "IF NOT EXISTS CREATE DATABASE BandAlbumTracks ON PRIMARY " +
+                                  "(NAME = BandAlbumTracks_Data, " +
+                                  "FILENAME = 'C:\\BandAlbumTracks.mdf";
 
-            string str = "IF NOT EXISTS CREATE DATABASE BandAlbumTracks ON PRIMARY " +
-                "(NAME = BandAlbumTracks_Data, " +
-                "FILENAME = 'C:\\BandAlbumTracks.mdf";
-
-            SqlCommand myCommand = new SqlCommand(str, conn);
-            try
+            using(SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                myCommand.ExecuteNonQuery();
-                MessageBox.Show("Database is Created Successfully", "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch(System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            finally
-            {
-                if(conn.State == ConnectionState.Open)
+                using(SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
-                    conn.Close();
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
@@ -44,8 +33,8 @@ namespace Band_Organizer
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "CREATE TABLE IF NOT EXISTS Bands(id primary key, name char(50); " +
-                                    "CREATE TABLE IF NOT EXISTS Albums(id foreign key, title char(50);" +
-                                    "CREATE TABLE IF NOT EXISTS Tracks(id foreign key, title char(50)";
+                                  "CREATE TABLE IF NOT EXISTS Albums(id foreign key, title char(50);" +
+                                  "CREATE TABLE IF NOT EXISTS Tracks(id foreign key, title char(50)";
 
             using(SqlConnection conn = new SqlConnection(connString))
             {
