@@ -48,12 +48,6 @@ namespace Band_Organizer
 
         public static void InsertBandName(Band bandName)
         {
-            //BandAlbumTracksDataSetTableAdapters.BandsTableAdapter bandsTableAdapter =
-            //    new BandAlbumTracksDataSetTableAdapters.BandsTableAdapter();
-
-            //bandsTableAdapter.Insert(1, $"{bandName.BandName}");
-
-
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "INSERT INTO Bands ([Name]) VALUES (@name)";
 
@@ -122,7 +116,28 @@ namespace Band_Organizer
             }
         }
 
-        private static void LoadData() { }
+        private static List<string> FetchAllData() 
+        {
+            List<string> bandList = new List<string>();
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "SELECT Name FROM Bands";
+
+            using(SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlStatement, conn);
+
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        bandList.Add(reader.GetString(1));
+                    }
+                }
+            }
+
+            return bandList;
+        }
 
     }
 }
