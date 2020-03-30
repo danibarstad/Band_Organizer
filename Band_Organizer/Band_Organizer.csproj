@@ -49,21 +49,11 @@
     <Compile Include="Album.cs" />
     <Compile Include="Band.cs" />
     <Compile Include="BandAlbumTrackDB.cs" />
-    <Compile Include="BandAlbumTracksDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BandAlbumTracksDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Band_Organizer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Band_Organizer.Designer.cs">
       <DependentUpon>Band_Organizer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,28 +70,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="BandAlbumTracksDataSet.xsc">
-      <DependentUpon>BandAlbumTracksDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="BandAlbumTracksDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>BandAlbumTracksDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="BandAlbumTracksDataSet.xss">
-      <DependentUpon>BandAlbumTracksDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet1.xsc">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet1.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataSet1.xss">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

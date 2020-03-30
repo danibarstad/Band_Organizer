@@ -11,6 +11,20 @@ namespace Band_Organizer
 {
     class BandAlbumTrackDB
     {
+        public static void DropDatabase()
+        {
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "DROP DATABASE IF EXISTS BandAlbumTracks;";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         public static void CreateDatabase()
         {
@@ -32,7 +46,7 @@ namespace Band_Organizer
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "IF OBJECT_ID('Bands') IS NULL\n" +
-                                    "CREATE TABLE Bands (id int NOT NULL PRIMARY KEY, name char(50) NOT NULL);" +
+                                    "CREATE TABLE Bands (id int NOT NULL IDENTITY(1,1) PRIMARY KEY, name char(50) NOT NULL);" +
                                   "IF OBJECT_ID('Albums') IS NULL\n" +
                                     "CREATE TABLE Albums (id int FOREIGN KEY REFERENCES Bands(id), title char(50));" +
                                   "IF OBJECT_ID('Tracks') IS NULL\n" +
@@ -106,7 +120,7 @@ namespace Band_Organizer
         public static void ClearAllData() 
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Bands; DELETE FROM Albums, DELETE FROM Tracks";
+            string sqlStatement = "DELETE FROM Bands; DELETE FROM Albums; DELETE FROM Tracks";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {

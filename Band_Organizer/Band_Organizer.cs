@@ -16,6 +16,7 @@ namespace Band_Organizer
         public Band_Organizer()
         {
             InitializeComponent();
+            //BandAlbumTrackDB.DropDatabase();        // FOR TESTING ONLY. Comment this line out to not drop existing database
             BandAlbumTrackDB.CreateDatabase();
             BandAlbumTrackDB.CreateTables();
         }
