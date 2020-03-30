@@ -120,7 +120,8 @@ namespace Band_Organizer
         public static void ClearAllData() 
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Bands; DELETE FROM Albums; DELETE FROM Tracks";
+            string sqlStatement = "DELETE FROM Bands; DELETE FROM Albums; DELETE FROM Tracks;" +
+                "DBCC CHECKIDENT ('Bands', RESEED, 0);";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -132,7 +133,7 @@ namespace Band_Organizer
             }
         }
 
-        private static List<string> FetchAllData() 
+        public static List<string> FetchAllData() 
         {
             List<string> bandList = new List<string>();
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
@@ -147,7 +148,7 @@ namespace Band_Organizer
                 {
                     while (reader.Read())
                     {
-                        bandList.Add(reader.GetString(1));
+                        bandList.Add(reader.GetString(0));
                     }
                 }
             }

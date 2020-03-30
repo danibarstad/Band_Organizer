@@ -37,9 +37,15 @@ namespace Band_Organizer
                     // then clears the textbox and moves the focus to the album name textbox
 
                     Band newBand = new Band { BandName = txtBandName.Text };
-                    lbBandList.Items.Add(newBand.BandName);
-
                     BandAlbumTrackDB.InsertBandName(newBand);
+
+                    lbBandList.Items.Clear();
+                    List<string> bandList = BandAlbumTrackDB.FetchAllData();
+                    foreach(string band in bandList)
+                    {
+                        lbBandList.Items.Add(band);
+                    }
+                    //lbBandList.Items.Add(newBand.BandName);
 
                     txtBandName.Clear();
                     txtAlbumName.Focus();
