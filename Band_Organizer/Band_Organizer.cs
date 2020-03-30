@@ -16,6 +16,8 @@ namespace Band_Organizer
         public Band_Organizer()
         {
             InitializeComponent();
+            BandAlbumTrackDB.CreateDatabase();
+            BandAlbumTrackDB.CreateTables();
         }
 
         private void btnExit_Click(object sender, EventArgs e)

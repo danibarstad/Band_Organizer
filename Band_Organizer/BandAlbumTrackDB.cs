@@ -12,12 +12,11 @@ namespace Band_Organizer
     class BandAlbumTrackDB
     {
 
-        private static void CreateDatabase()
+        public static void CreateDatabase()
         {
-            string connString = "Server = localhost, Integrated Security = SSPI, database = master";
-            string sqlStatement = "IF NOT EXISTS CREATE DATABASE BandAlbumTracks ON PRIMARY " +
-                                  "(NAME = BandAlbumTracks_Data, " +
-                                  "FILENAME = 'C:\\BandAlbumTracks.mdf";
+            string connString = "Server = localhost; Integrated Security = SSPI; database = master;";
+            string sqlStatement = "IF NOT EXISTS ( SELECT * FROM sys.databases WHERE name = N'BandAlbumTracks')" +
+                                  "CREATE DATABASE BandAlbumTracks";
 
             using(SqlConnection conn = new SqlConnection(connString))
             {
@@ -29,12 +28,15 @@ namespace Band_Organizer
             }
         }
 
-        private static void CreateTables()
+        public static void CreateTables()
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "CREATE TABLE IF NOT EXISTS Bands(id primary key, name char(50); " +
-                                  "CREATE TABLE IF NOT EXISTS Albums(id foreign key, title char(50);" +
-                                  "CREATE TABLE IF NOT EXISTS Tracks(id foreign key, title char(50)";
+            string sqlStatement = "IF OBJECT_ID('Bands') IS NULL\n" +
+                                    "CREATE TABLE Bands (id int NOT NULL PRIMARY KEY, name char(50) NOT NULL);" +
+                                  "IF OBJECT_ID('Albums') IS NULL\n" +
+                                    "CREATE TABLE Albums (id int FOREIGN KEY REFERENCES Bands(id), title char(50));" +
+                                  "IF OBJECT_ID('Tracks') IS NULL\n" +
+                                    "CREATE TABLE Tracks (id int FOREIGN KEY REFERENCES Bands(id), title char(50))";
 
             using(SqlConnection conn = new SqlConnection(connString))
             {
