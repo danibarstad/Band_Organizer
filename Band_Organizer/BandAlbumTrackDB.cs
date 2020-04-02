@@ -82,13 +82,16 @@ namespace Band_Organizer
         public static void InsertAlbumName(Album albumTitle) 
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "INSERT INTO Albums ([Title], [ReleaseDate]) VALUES (@title, @releaseDate)";
+            string sqlStatement = "INSERT INTO Albums ([Id], [Title], [ReleaseDate]) VALUES (@id, @title, @releaseDate)";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
+
+                    cmd.Parameters.Add("id", SqlDbType.Int);
+                    cmd.Parameters["id"].Value = albumTitle.Id;
                     cmd.Parameters.Add("@title", SqlDbType.NText);
                     cmd.Parameters["@title"].Value = albumTitle.AlbumTitle;
 
@@ -200,6 +203,28 @@ namespace Band_Organizer
             }
 
             return trackList;
+        }
+        public static int GetPrimaryKey(string band)
+        {
+            int primaryKey = new int();
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "SELECT id FROM Bands WHERE Name = '@name'";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.Parameters.AddWithValue("@name", band);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        primaryKey = reader.GetInt32(1);
+                    }
+                }
+            }
+
+            return primaryKey;
         }
     }
 }

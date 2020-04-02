@@ -62,9 +62,10 @@ namespace Band_Organizer
                 {
                     // album name is added to the listbox 
                     // then the textbox is cleared and focus is moved to the track name textbox
-
+                    
                     string bandName = lbBandList.SelectedItem.ToString().Trim();
                     Album newAlbum = new Album { 
+                        Id = BandAlbumTrackDB.GetPrimaryKey(bandName),
                         AlbumTitle = txtAlbumName.Text, 
                         ReleaseDate = dtReleaseDate.Value.ToLocalTime()
                     };
