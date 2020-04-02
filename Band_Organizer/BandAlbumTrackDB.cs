@@ -178,5 +178,28 @@ namespace Band_Organizer
 
             return albumList;
         }
+
+        public static List<string> FetchTrackData()
+        {
+            List<string> trackList = new List<string>();
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatment = "SELECT Title FROM Tracks";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlStatment, conn);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        trackList.Add(reader.GetString(0));
+                    }
+                }
+            }
+
+            return trackList;
+        }
     }
 }
