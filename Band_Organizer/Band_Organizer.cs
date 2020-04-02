@@ -19,6 +19,7 @@ namespace Band_Organizer
             //BandAlbumTrackDB.DropDatabase();        // FOR TESTING ONLY. Comment this line out to not drop existing database
             BandAlbumTrackDB.CreateDatabase();
             BandAlbumTrackDB.CreateTables();
+            FillListBox();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -39,13 +40,7 @@ namespace Band_Organizer
                     Band newBand = new Band { BandName = txtBandName.Text };
                     BandAlbumTrackDB.InsertBandName(newBand);
 
-                    lbBandList.Items.Clear();
-                    List<string> bandList = BandAlbumTrackDB.FetchAllData();
-                    foreach(string band in bandList)
-                    {
-                        lbBandList.Items.Add(band);
-                    }
-                    //lbBandList.Items.Add(newBand.BandName);
+                    FillListBox();
 
                     txtBandName.Clear();
                     txtAlbumName.Focus();
@@ -68,13 +63,19 @@ namespace Band_Organizer
                     // album name is added to the listbox 
                     // then the textbox is cleared and focus is moved to the track name textbox
 
+                    string bandName = lbBandList.SelectedItem.ToString().Trim();
                     Album newAlbum = new Album { 
                         AlbumTitle = txtAlbumName.Text, 
-                        ReleaseDate = Convert.ToString(dtReleaseDate.Text) };                    
+                        ReleaseDate = dtReleaseDate.Value.ToLocalTime()
+                    };
 
-                    lbAlbumList.Items.Add(
-                        newAlbum.AlbumTitle + "\t" + 
-                        newAlbum.ReleaseDate);
+                    BandAlbumTrackDB.InsertAlbumName(newAlbum);
+                    lbAlbumList.Items.Clear();
+                    List<string> albumList = BandAlbumTrackDB.FetchAlbumData();
+                    foreach (string album in albumList)
+                    {
+                        lbAlbumList.Items.Add(album);
+                    }
 
                     txtAlbumName.Clear();
                     dtReleaseDate.ResetText();
@@ -132,7 +133,7 @@ namespace Band_Organizer
             }
         }
 
-        public bool IsPresent(TextBox textBox, string name)
+        private bool IsPresent(TextBox textBox, string name)
         {
             // checks if a textbox is empty, notifies user if true
             if (textBox.Text == "")
@@ -145,7 +146,7 @@ namespace Band_Organizer
             return true;
         }
 
-        public bool ClearAllData()
+        private bool ClearAllData()
         {
             // warns user when attempting to clear all data
             string message = "Are you sure you want to clear all data?";
@@ -161,7 +162,7 @@ namespace Band_Organizer
                 return false;
         }
 
-        public bool CheckIfSelected(ListBox listBox, string name)
+        private bool CheckIfSelected(ListBox listBox, string name)
         {
             // checks to make sure a band or album is selected before entering more input
             if (listBox.SelectedIndex == -1)
@@ -171,6 +172,16 @@ namespace Band_Organizer
             }
             else
                 return true;
+        }
+
+        private void FillListBox()
+        {
+            lbBandList.Items.Clear();
+            List<string> bandList = BandAlbumTrackDB.FetchAllData();
+            foreach (string band in bandList)
+            {
+                lbBandList.Items.Add(band);
+            }
         }
     }
 }

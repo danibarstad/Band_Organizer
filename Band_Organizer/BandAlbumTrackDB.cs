@@ -48,7 +48,7 @@ namespace Band_Organizer
             string sqlStatement = "IF OBJECT_ID('Bands') IS NULL\n" +
                                     "CREATE TABLE Bands (id int NOT NULL IDENTITY(1,1) PRIMARY KEY, name char(50) NOT NULL);" +
                                   "IF OBJECT_ID('Albums') IS NULL\n" +
-                                    "CREATE TABLE Albums (id int FOREIGN KEY REFERENCES Bands(id), title char(50));" +
+                                    "CREATE TABLE Albums (id int FOREIGN KEY REFERENCES Bands(id), title char(50), releasedate date);" +
                                   "IF OBJECT_ID('Tracks') IS NULL\n" +
                                     "CREATE TABLE Tracks (id int FOREIGN KEY REFERENCES Bands(id), title char(50))";
 
@@ -156,5 +156,27 @@ namespace Band_Organizer
             return bandList;
         }
 
+        public static List<string> FetchAlbumData()
+        {
+            List<string> albumList = new List<string>();
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "SELECT Title FROM Albums";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlStatement, conn);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        albumList.Add(reader.GetString(0));
+                    }
+                }
+            }
+
+            return albumList;
+        }
     }
 }

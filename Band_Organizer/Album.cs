@@ -9,8 +9,8 @@ namespace Band_Organizer
     class Album
     {
 
-        public string albumTitle;
-        private string releaseDate;
+        private string albumTitle;
+        private DateTime releaseDate;
 
         public Album() { }
 
@@ -20,6 +20,6 @@ namespace Band_Organizer
         }
 
         public string AlbumTitle { get => albumTitle; set => albumTitle = value; }
-        public string ReleaseDate { get => releaseDate; set => releaseDate = value; }
+        public DateTime ReleaseDate { get => releaseDate; set => releaseDate = value; }
     }
 }
