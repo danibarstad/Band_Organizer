@@ -32,7 +32,7 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtBandName, "Band Name"))
+                if (IsPresent(txtBandName, "Band Name") && CheckIfInList(txtBandName, lbBandList))
                 {
                     // the band name is added to the listbox 
                     // then clears the textbox and moves the focus to the album name textbox
@@ -58,7 +58,7 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtAlbumName, "Album Name") && CheckIfSelected(lbBandList, lblBandName.Text))
+                if (IsPresent(txtAlbumName, "Album Name") && CheckIfSelected(lbBandList, lblBandName.Text) && CheckIfInList(txtAlbumName, lbAlbumList))
                 {
                     // album name is added to the listbox 
                     // then the textbox is cleared and focus is moved to the track name textbox
@@ -94,7 +94,7 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtTrackName, "Track Name") && CheckIfSelected(lbAlbumList, lblAlbumName.Text))
+                if (IsPresent(txtTrackName, "Track Name") && CheckIfSelected(lbAlbumList, lblAlbumName.Text) && CheckIfInList(txtTrackName, lbTrackList))
                 {
                     // track name is added to the listbox then the textbox is cleared
 
@@ -142,7 +142,7 @@ namespace Band_Organizer
 
         private bool IsPresent(TextBox textBox, string name)
         {
-            // checks if a textbox is empty, notifies user if true
+            // checks if a textbox is empty, notifies user if false
             if (textBox.Text == "")
             {
                 MessageBox.Show(name + " is a required field.", 
@@ -219,6 +219,18 @@ namespace Band_Organizer
                     lbTrackList.Items.Add(track);
                 }
             }
+        }
+
+        private bool CheckIfInList(TextBox textBox, ListBox listBox)
+        {
+            if (listBox.Items.Contains(textBox.Text))
+            {
+                MessageBox.Show("This already exists in the database.",
+                    "Entry Error");
+                textBox.Focus();
+                return false;
+            }
+            return true;
         }
     }
 }

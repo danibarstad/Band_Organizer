@@ -141,7 +141,7 @@ namespace Band_Organizer
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "DELETE FROM Tracks; DELETE FROM Albums; DELETE FROM Bands;" +
-                "DBCC CHECKIDENT ('?', RESEED, 0);";
+                                  "DBCC CHECKIDENT ('?', RESEED, 0);";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
