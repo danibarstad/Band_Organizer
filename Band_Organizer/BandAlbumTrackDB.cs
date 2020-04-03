@@ -61,8 +61,7 @@ namespace Band_Organizer
                                     "CREATE TABLE Tracks (" +
                                         "id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, " +
                                         "title VARCHAR(50), " +
-                                        "album_id INT FOREIGN KEY REFERENCES Albums(id), " +
-                                        "band_id INT FOREIGN KEY REFERENCES Bands(id)" +
+                                        "album_id INT FOREIGN KEY REFERENCES Albums(id)" +
                                         ")";
 
             using(SqlConnection conn = new SqlConnection(connString))
@@ -117,16 +116,19 @@ namespace Band_Organizer
             }
         }
 
-        public static void InsertTrackName(Tracks trackTitle) 
+        public static void InsertTrackName(Tracks trackTitle, string albumName) 
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "INSERT INTO Tracks ([Title]) VALUES (@title)";
+            string sqlStatement = "INSERT INTO Tracks ([Title], [album_id]) VALUES (@title, (SELECT id FROM Albums WHERE title = @name ))";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
+                    cmd.Parameters.Add("@name", SqlDbType.NVarChar);
+                    cmd.Parameters["@name"].Value = albumName;
+
                     cmd.Parameters.Add("@title", SqlDbType.NVarChar);
                     cmd.Parameters["@title"].Value = trackTitle.TrackTitle;
 
@@ -201,22 +203,26 @@ namespace Band_Organizer
             return albumList;
         }
 
-        public static List<string> FetchTrackData()
+        public static List<string> FetchTrackData(string albumName)
         {
             List<string> trackList = new List<string>();
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatment = "SELECT Title FROM Tracks";
+            string sqlStatment = "SELECT Title FROM Tracks WHERE album_id = (SELECT id FROM Albums WHERE title = @name)";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(sqlStatment, conn);
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlCommand cmd = new SqlCommand(sqlStatment, conn))
                 {
-                    while (reader.Read())
+                    cmd.Parameters.Add("@name", SqlDbType.NVarChar);
+                    cmd.Parameters["@name"].Value = albumName;
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        trackList.Add(reader.GetString(0));
+                        while (reader.Read())
+                        {
+                            trackList.Add(reader.GetString(0));
+                        }
                     }
                 }
             }

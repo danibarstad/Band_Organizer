@@ -99,10 +99,11 @@ namespace Band_Organizer
                     // track name is added to the listbox then the textbox is cleared
 
                     Tracks newTrack = new Tracks { TrackTitle = txtTrackName.Text };
+                    string albumName = lbAlbumList.SelectedItem.ToString().Trim();
 
-                    BandAlbumTrackDB.InsertTrackName(newTrack);
+                    BandAlbumTrackDB.InsertTrackName(newTrack, albumName);
                     lbTrackList.Items.Clear();
-                    List<string> trackList = BandAlbumTrackDB.FetchTrackData();
+                    List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
                     foreach (string track in trackList)
                     {
                         lbTrackList.Items.Add(track);
@@ -198,6 +199,24 @@ namespace Band_Organizer
             foreach (string album in albumList)
             {
                 lbAlbumList.Items.Add(album);
+            }
+        }
+
+        private void lbAlbumList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbAlbumList.SelectedItem == null)
+            {
+                MessageBox.Show("whoops");
+            }
+            else
+            {
+                string albumName = lbAlbumList.SelectedItem.ToString().Trim();
+                lbTrackList.Items.Clear();
+                List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
+                foreach (string track in trackList)
+                {
+                    lbTrackList.Items.Add(track);
+                }
             }
         }
     }
