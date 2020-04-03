@@ -32,7 +32,8 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtBandName, "Band Name") && CheckIfInList(txtBandName, lbBandList))
+                if (IsPresent(txtBandName, "Band Name") && 
+                    CheckIfInList(txtBandName, lbBandList))
                 {
                     // the band name is added to the listbox 
                     // then clears the textbox and moves the focus to the album name textbox
@@ -58,7 +59,9 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtAlbumName, "Album Name") && CheckIfSelected(lbBandList, lblBandName.Text) && CheckIfInList(txtAlbumName, lbAlbumList))
+                if (IsPresent(txtAlbumName, "Album Name") && 
+                    CheckIfSelected(lbBandList, lblBandName.Text) && 
+                    CheckIfInList(txtAlbumName, lbAlbumList))
                 {
                     // album name is added to the listbox 
                     // then the textbox is cleared and focus is moved to the track name textbox
@@ -94,7 +97,9 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtTrackName, "Track Name") && CheckIfSelected(lbAlbumList, lblAlbumName.Text) && CheckIfInList(txtTrackName, lbTrackList))
+                if (IsPresent(txtTrackName, "Track Name") && 
+                    CheckIfSelected(lbAlbumList, lblAlbumName.Text) && 
+                    CheckIfInList(txtTrackName, lbTrackList))
                 {
                     // track name is added to the listbox then the textbox is cleared
 
