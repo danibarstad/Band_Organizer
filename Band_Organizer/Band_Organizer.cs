@@ -65,12 +65,11 @@ namespace Band_Organizer
                     
                     string bandName = lbBandList.SelectedItem.ToString().Trim();
                     Album newAlbum = new Album { 
-                        Id = BandAlbumTrackDB.GetPrimaryKey(bandName),
                         AlbumTitle = txtAlbumName.Text, 
                         ReleaseDate = dtReleaseDate.Value.ToLocalTime()
                     };
 
-                    BandAlbumTrackDB.InsertAlbumName(newAlbum);
+                    BandAlbumTrackDB.InsertAlbumName(newAlbum, bandName);
                     lbAlbumList.Items.Clear();
                     List<string> albumList = BandAlbumTrackDB.FetchAlbumData();
                     foreach (string album in albumList)

@@ -46,11 +46,24 @@ namespace Band_Organizer
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "IF OBJECT_ID('Bands') IS NULL\n" +
-                                    "CREATE TABLE Bands (id int NOT NULL IDENTITY(1,1) PRIMARY KEY, name char(50) NOT NULL);" +
+                                    "CREATE TABLE Bands (" +
+                                        "id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, " +
+                                        "name VARCHAR(50)" +
+                                        ");" +
                                   "IF OBJECT_ID('Albums') IS NULL\n" +
-                                    "CREATE TABLE Albums (id int FOREIGN KEY REFERENCES Bands(id), title char(50), releasedate date);" +
+                                    "CREATE TABLE Albums (" +
+                                        "id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, " +
+                                        "title VARCHAR(50), " +
+                                        "release_date DATE, " +
+                                        "band_id INT FOREIGN KEY REFERENCES Bands(id)" +
+                                        ");" +
                                   "IF OBJECT_ID('Tracks') IS NULL\n" +
-                                    "CREATE TABLE Tracks (id int FOREIGN KEY REFERENCES Bands(id), title char(50))";
+                                    "CREATE TABLE Tracks (" +
+                                        "id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, " +
+                                        "title VARCHAR(50), " +
+                                        "album_id INT FOREIGN KEY REFERENCES Albums(id), " +
+                                        "band_id INT FOREIGN KEY REFERENCES Bands(id)" +
+                                        ")";
 
             using(SqlConnection conn = new SqlConnection(connString))
             {
@@ -79,20 +92,20 @@ namespace Band_Organizer
             }
         }
 
-        public static void InsertAlbumName(Album albumTitle) 
+        public static void InsertAlbumName(Album albumTitle, string bandName) 
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "INSERT INTO Albums ([Id], [Title], [ReleaseDate]) VALUES (@id, @title, @releaseDate)";
+            string sqlStatement = "INSERT INTO Albums ([Title], [Release_Date], [band_id]) VALUES (@title, @releaseDate, (SELECT id FROM Bands WHERE name = @name ))";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
+                    cmd.Parameters.Add("@name", SqlDbType.NVarChar);
+                    cmd.Parameters["@name"].Value = bandName;
 
-                    cmd.Parameters.Add("id", SqlDbType.Int);
-                    cmd.Parameters["id"].Value = albumTitle.Id;
-                    cmd.Parameters.Add("@title", SqlDbType.NText);
+                    cmd.Parameters.Add("@title", SqlDbType.NVarChar);
                     cmd.Parameters["@title"].Value = albumTitle.AlbumTitle;
 
                     cmd.Parameters.Add("@releaseDate", SqlDbType.Date);
@@ -124,7 +137,7 @@ namespace Band_Organizer
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "DELETE FROM Bands; DELETE FROM Albums; DELETE FROM Tracks;" +
-                "DBCC CHECKIDENT ('Bands', RESEED, 0);";
+                "DBCC CHECKIDENT ('?', RESEED, 0);";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -203,28 +216,6 @@ namespace Band_Organizer
             }
 
             return trackList;
-        }
-        public static int GetPrimaryKey(string band)
-        {
-            int primaryKey = new int();
-            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "SELECT id FROM Bands WHERE Name = '@name'";
-
-            using (SqlConnection conn = new SqlConnection(connString))
-            {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
-                {
-                    cmd.Parameters.AddWithValue("@name", band);
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        primaryKey = reader.GetInt32(1);
-                    }
-                }
-            }
-
-            return primaryKey;
         }
     }
 }
