@@ -195,6 +195,7 @@ namespace Band_Organizer
         {
             string bandName = lbBandList.SelectedItem.ToString().Trim();
             lbAlbumList.Items.Clear();
+            lbTrackList.Items.Clear();
             List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
             foreach (string album in albumList)
             {
