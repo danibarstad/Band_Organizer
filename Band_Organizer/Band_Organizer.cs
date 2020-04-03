@@ -71,7 +71,7 @@ namespace Band_Organizer
 
                     BandAlbumTrackDB.InsertAlbumName(newAlbum, bandName);
                     lbAlbumList.Items.Clear();
-                    List<string> albumList = BandAlbumTrackDB.FetchAlbumData();
+                    List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
                     foreach (string album in albumList)
                     {
                         lbAlbumList.Items.Add(album);
@@ -187,6 +187,17 @@ namespace Band_Organizer
             foreach (string band in bandList)
             {
                 lbBandList.Items.Add(band);
+            }
+        }
+
+        private void lbBandList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string bandName = lbBandList.SelectedItem.ToString().Trim();
+            lbAlbumList.Items.Clear();
+            List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
+            foreach (string album in albumList)
+            {
+                lbAlbumList.Items.Add(album);
             }
         }
     }

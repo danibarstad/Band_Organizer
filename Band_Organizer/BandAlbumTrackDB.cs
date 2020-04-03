@@ -85,8 +85,9 @@ namespace Band_Organizer
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
-                    cmd.Parameters.Add("@name", SqlDbType.NText);
+                    cmd.Parameters.Add("@name", SqlDbType.NVarChar);
                     cmd.Parameters["@name"].Value = bandName.BandName;
+
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -126,8 +127,9 @@ namespace Band_Organizer
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
-                    cmd.Parameters.Add("@title", SqlDbType.NText);
+                    cmd.Parameters.Add("@title", SqlDbType.NVarChar);
                     cmd.Parameters["@title"].Value = trackTitle.TrackTitle;
+
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -136,7 +138,7 @@ namespace Band_Organizer
         public static void ClearAllData() 
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Bands; DELETE FROM Albums; DELETE FROM Tracks;" +
+            string sqlStatement = "DELETE FROM Tracks; DELETE FROM Albums; DELETE FROM Bands;" +
                 "DBCC CHECKIDENT ('?', RESEED, 0);";
 
             using (SqlConnection conn = new SqlConnection(connString))
@@ -172,22 +174,26 @@ namespace Band_Organizer
             return bandList;
         }
 
-        public static List<string> FetchAlbumData()
+        public static List<string> FetchAlbumData(string bandName)
         {
             List<string> albumList = new List<string>();
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "SELECT Title FROM Albums";
+            string sqlStatement = "SELECT Title FROM Albums WHERE band_id = (SELECT id FROM Bands WHERE name = @name)";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(sqlStatement, conn);
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
-                    while (reader.Read())
+                    cmd.Parameters.Add("@name", SqlDbType.NVarChar);
+                    cmd.Parameters["@name"].Value = bandName;
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        albumList.Add(reader.GetString(0));
+                        while (reader.Read())
+                        {
+                            albumList.Add(reader.GetString(0));
+                        }
                     }
                 }
             }

@@ -102,6 +102,7 @@
             this.lbBandList.Size = new System.Drawing.Size(188, 238);
             this.lbBandList.TabIndex = 6;
             this.lbBandList.TabStop = false;
+            this.lbBandList.SelectedIndexChanged += new System.EventHandler(this.lbBandList_SelectedIndexChanged);
             // 
             // lbAlbumList
             // 
