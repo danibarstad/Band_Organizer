@@ -180,7 +180,7 @@ namespace Band_Organizer
         {
             List<string> albumList = new List<string>();
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "SELECT Title FROM Albums WHERE band_id = (SELECT id FROM Bands WHERE name = @name)";
+            string sqlStatement = "SELECT Title FROM Albums WHERE band_id = (SELECT id FROM Bands WHERE name = @name) ORDER BY release_date ASC";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -207,7 +207,7 @@ namespace Band_Organizer
         {
             List<string> trackList = new List<string>();
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatment = "SELECT Title FROM Tracks WHERE album_id = (SELECT id FROM Albums WHERE title = @name)";
+            string sqlStatment = "SELECT Title FROM Tracks WHERE album_id = (SELECT id FROM Albums WHERE title = @name) ORDER BY id ASC";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
