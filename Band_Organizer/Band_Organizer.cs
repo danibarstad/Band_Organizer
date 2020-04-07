@@ -103,7 +103,7 @@ namespace Band_Organizer
 
                     Tracks newTrack = new Tracks { 
                         TrackTitle = txtTrackName.Text,
-                        TrackNumber = Int32.Parse(txtTrackName.Text)
+                        TrackNumber = Int32.Parse(txtTrackNo.Text)
                     };
                     string albumName = lbAlbumList.SelectedItem.ToString().Trim();
 
@@ -112,6 +112,7 @@ namespace Band_Organizer
                     FillListBox(trackList, lbTrackList);
 
                     txtTrackName.Clear();
+                    txtTrackNo.Clear();
                     txtTrackName.Focus();
                 }
             }
@@ -133,6 +134,7 @@ namespace Band_Organizer
                 txtBandName.Clear();
                 txtAlbumName.Clear();
                 txtTrackName.Clear();
+                txtTrackNo.Clear();
 
                 dtReleaseDate.ResetText();
 

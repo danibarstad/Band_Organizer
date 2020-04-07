@@ -60,6 +60,7 @@ namespace Band_Organizer
                                   "IF OBJECT_ID('Tracks') IS NULL\n" +
                                     "CREATE TABLE Tracks (" +
                                         "id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, " +
+                                        "track_no INT, " +
                                         "title VARCHAR(50), " +
                                         "album_id INT FOREIGN KEY REFERENCES Albums(id)" +
                                         ")";
@@ -116,21 +117,24 @@ namespace Band_Organizer
             }
         }
 
-        public static void InsertTrackName(Tracks trackTitle, string albumName) 
+        public static void InsertTrackName(Tracks track, string albumName) 
         {
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "INSERT INTO Tracks ([Title], [album_id]) VALUES (@title, (SELECT id FROM Albums WHERE title = @name ))";
+            string sqlStatement = "INSERT INTO Tracks ([Track_No], [Title], [album_id]) VALUES (@trackNo, @title, (SELECT id FROM Albums WHERE title = @name ))";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
+                    cmd.Parameters.Add("@trackNo", SqlDbType.Int);
+                    cmd.Parameters["@trackNo"].Value = track.TrackNumber;
+
                     cmd.Parameters.Add("@name", SqlDbType.NVarChar);
                     cmd.Parameters["@name"].Value = albumName;
 
                     cmd.Parameters.Add("@title", SqlDbType.NVarChar);
-                    cmd.Parameters["@title"].Value = trackTitle.TrackTitle;
+                    cmd.Parameters["@title"].Value = track.TrackTitle;
 
                     cmd.ExecuteNonQuery();
                 }
@@ -157,7 +161,7 @@ namespace Band_Organizer
         {
             List<string> bandList = new List<string>();
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "SELECT Name FROM Bands";
+            string sqlStatement = "SELECT Name FROM Bands ORDER BY Name ASC";
 
             using(SqlConnection conn = new SqlConnection(connString))
             {
@@ -207,7 +211,7 @@ namespace Band_Organizer
         {
             List<string> trackList = new List<string>();
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatment = "SELECT Title FROM Tracks WHERE album_id = (SELECT id FROM Albums WHERE title = @name) ORDER BY id ASC";
+            string sqlStatment = "SELECT Title FROM Tracks WHERE album_id = (SELECT id FROM Albums WHERE title = @name) ORDER BY track_no ASC";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
