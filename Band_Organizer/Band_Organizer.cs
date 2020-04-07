@@ -19,7 +19,7 @@ namespace Band_Organizer
             //BandAlbumTrackDB.DropDatabase();        // FOR TESTING ONLY. Comment this line out to not drop existing database
             BandAlbumTrackDB.CreateDatabase();
             BandAlbumTrackDB.CreateTables();
-            FillListBox();
+            StartProgramFillListBox();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -41,7 +41,7 @@ namespace Band_Organizer
                     Band newBand = new Band { BandName = txtBandName.Text };
                     BandAlbumTrackDB.InsertBandName(newBand);
 
-                    FillListBox();
+                    StartProgramFillListBox();
 
                     txtBandName.Clear();
                     txtAlbumName.Focus();
@@ -59,8 +59,8 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtAlbumName, "Album Name") && 
-                    CheckIfSelected(lbBandList, lblBandName.Text) && 
+                if (IsPresent(txtAlbumName, "Album Name")           && 
+                    CheckIfSelected(lbBandList, lblBandName.Text)   && 
                     CheckIfInList(txtAlbumName, lbAlbumList))
                 {
                     // album name is added to the listbox 
@@ -97,8 +97,8 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtTrackName, "Track Name") && 
-                    CheckIfSelected(lbAlbumList, lblAlbumName.Text) && 
+                if (IsPresent(txtTrackName, "Track Name")               && 
+                    CheckIfSelected(lbAlbumList, lblAlbumName.Text)     && 
                     CheckIfInList(txtTrackName, lbTrackList))
                 {
                     // track name is added to the listbox then the textbox is cleared
@@ -186,10 +186,10 @@ namespace Band_Organizer
                 return true;
         }
 
-        private void FillListBox()
+        private void StartProgramFillListBox()
         {
             lbBandList.Items.Clear();
-            List<string> bandList = BandAlbumTrackDB.FetchAllData();
+            List<string> bandList = BandAlbumTrackDB.FetchBandData();
             foreach (string band in bandList)
             {
                 lbBandList.Items.Add(band);
@@ -199,13 +199,8 @@ namespace Band_Organizer
         private void lbBandList_SelectedIndexChanged(object sender, EventArgs e)
         {
             string bandName = lbBandList.SelectedItem.ToString().Trim();
-            lbAlbumList.Items.Clear();
-            lbTrackList.Items.Clear();
             List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
-            foreach (string album in albumList)
-            {
-                lbAlbumList.Items.Add(album);
-            }
+            FillListBox(albumList, lbAlbumList, lbTrackList);
         }
 
         private void lbAlbumList_SelectedIndexChanged(object sender, EventArgs e)
@@ -217,12 +212,8 @@ namespace Band_Organizer
             else
             {
                 string albumName = lbAlbumList.SelectedItem.ToString().Trim();
-                lbTrackList.Items.Clear();
                 List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
-                foreach (string track in trackList)
-                {
-                    lbTrackList.Items.Add(track);
-                }
+                FillListBox(trackList, lbTrackList);
             }
         }
 
@@ -236,6 +227,19 @@ namespace Band_Organizer
                 return false;
             }
             return true;
+        }
+
+        private void FillListBox(List<string> list, ListBox listBox, 
+                                 ListBox secondListBox = default(ListBox))
+        {
+            listBox.Items.Clear();
+            if (secondListBox != null)
+                secondListBox.Items.Clear();
+
+            foreach (string item in list)
+            {
+                listBox.Items.Add(item);
+            }
         }
     }
 }

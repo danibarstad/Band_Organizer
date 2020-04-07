@@ -153,7 +153,7 @@ namespace Band_Organizer
             }
         }
 
-        public static List<string> FetchAllData() 
+        public static List<string> FetchBandData() 
         {
             List<string> bandList = new List<string>();
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
