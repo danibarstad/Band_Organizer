@@ -10,9 +10,11 @@ namespace Band_Organizer
     {
 
         private string trackTitle;
+        private int trackNumber;
 
         public Tracks() { }
 
         public string TrackTitle { get => trackTitle; set => trackTitle = value; }
+        public int TrackNumber { get => trackNumber; set => trackNumber = value; }
     }
 }

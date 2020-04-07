@@ -44,6 +44,8 @@
             this.btnAddTrack = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnClearAll = new System.Windows.Forms.Button();
+            this.txtTrackNo = new System.Windows.Forms.TextBox();
+            this.lblTrackNo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblBandName
@@ -196,12 +198,30 @@
             this.btnClearAll.UseVisualStyleBackColor = true;
             this.btnClearAll.Click += new System.EventHandler(this.btnClearAll_Click);
             // 
+            // txtTrackNo
+            // 
+            this.txtTrackNo.Location = new System.Drawing.Point(640, 32);
+            this.txtTrackNo.Name = "txtTrackNo";
+            this.txtTrackNo.Size = new System.Drawing.Size(31, 20);
+            this.txtTrackNo.TabIndex = 10;
+            // 
+            // lblTrackNo
+            // 
+            this.lblTrackNo.AutoSize = true;
+            this.lblTrackNo.Location = new System.Drawing.Point(565, 35);
+            this.lblTrackNo.Name = "lblTrackNo";
+            this.lblTrackNo.Size = new System.Drawing.Size(48, 13);
+            this.lblTrackNo.TabIndex = 11;
+            this.lblTrackNo.Text = "Track #:";
+            // 
             // Band_Organizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(861, 408);
+            this.Controls.Add(this.lblTrackNo);
+            this.Controls.Add(this.txtTrackNo);
             this.Controls.Add(this.btnClearAll);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnAddTrack);
@@ -244,6 +264,8 @@
         private System.Windows.Forms.Button btnAddTrack;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnClearAll;
+        private System.Windows.Forms.TextBox txtTrackNo;
+        private System.Windows.Forms.Label lblTrackNo;
     }
 }
 

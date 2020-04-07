@@ -33,7 +33,7 @@ namespace Band_Organizer
             try
             {
                 if (IsPresent(txtBandName, "Band Name") && 
-                    CheckIfInList(txtBandName, lbBandList))
+                    IsInList(txtBandName, lbBandList))
                 {
                     // the band name is added to the listbox 
                     // then clears the textbox and moves the focus to the album name textbox
@@ -60,8 +60,8 @@ namespace Band_Organizer
             try
             {
                 if (IsPresent(txtAlbumName, "Album Name")           && 
-                    CheckIfSelected(lbBandList, lblBandName.Text)   && 
-                    CheckIfInList(txtAlbumName, lbAlbumList))
+                    IsSelected(lbBandList, lblBandName.Text)   && 
+                    IsInList(txtAlbumName, lbAlbumList))
                 {
                     // album name is added to the listbox 
                     // then the textbox is cleared and focus is moved to the track name textbox
@@ -94,13 +94,17 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtTrackName, "Track Name")               && 
-                    CheckIfSelected(lbAlbumList, lblAlbumName.Text)     && 
-                    CheckIfInList(txtTrackName, lbTrackList))
+                if (IsPresent(txtTrackName, "Track Name")           &&
+                    IsSelected(lbAlbumList, lblAlbumName.Text)      &&
+                    IsInList(txtTrackName, lbTrackList)             &&
+                    IsInt(txtTrackNo))
                 {
                     // track name is added to the listbox then the textbox is cleared
 
-                    Tracks newTrack = new Tracks { TrackTitle = txtTrackName.Text };
+                    Tracks newTrack = new Tracks { 
+                        TrackTitle = txtTrackName.Text,
+                        TrackNumber = Int32.Parse(txtTrackName.Text)
+                    };
                     string albumName = lbAlbumList.SelectedItem.ToString().Trim();
 
                     BandAlbumTrackDB.InsertTrackName(newTrack, albumName);
@@ -167,7 +171,7 @@ namespace Band_Organizer
                 return false;
         }
 
-        private bool CheckIfSelected(ListBox listBox, string name)
+        private bool IsSelected(ListBox listBox, string name)
         {
             // checks to make sure a band or album is selected before entering more input
             if (listBox.SelectedIndex == -1)
@@ -209,7 +213,7 @@ namespace Band_Organizer
             }
         }
 
-        private bool CheckIfInList(TextBox textBox, ListBox listBox)
+        private bool IsInList(TextBox textBox, ListBox listBox)
         {
             if (listBox.Items.Contains(textBox.Text))
             {
@@ -230,6 +234,18 @@ namespace Band_Organizer
 
             foreach (string item in list)
                 listBox.Items.Add(item);
+        }
+
+        private bool IsInt(TextBox textBox)
+        {
+            int x;
+            if (int.TryParse(textBox.Text, out x))
+                return true;
+            else
+            {
+                MessageBox.Show("Must be a numerical value.", "Value Error");
+                return false;
+            }
         }
     }
 }
