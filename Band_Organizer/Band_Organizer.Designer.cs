@@ -172,7 +172,7 @@
             this.btnAddTrack.Location = new System.Drawing.Point(640, 58);
             this.btnAddTrack.Name = "btnAddTrack";
             this.btnAddTrack.Size = new System.Drawing.Size(100, 23);
-            this.btnAddTrack.TabIndex = 6;
+            this.btnAddTrack.TabIndex = 7;
             this.btnAddTrack.Text = "Add Track";
             this.btnAddTrack.UseVisualStyleBackColor = true;
             this.btnAddTrack.Click += new System.EventHandler(this.btnAddTrack_Click);
@@ -203,7 +203,7 @@
             this.txtTrackNo.Location = new System.Drawing.Point(640, 32);
             this.txtTrackNo.Name = "txtTrackNo";
             this.txtTrackNo.Size = new System.Drawing.Size(31, 20);
-            this.txtTrackNo.TabIndex = 10;
+            this.txtTrackNo.TabIndex = 6;
             // 
             // lblTrackNo
             // 
