@@ -19,7 +19,7 @@ namespace Band_Organizer
             //BandAlbumTrackDB.DropDatabase();        // FOR TESTING ONLY. Comment this line out to not drop existing database
             BandAlbumTrackDB.CreateDatabase();
             BandAlbumTrackDB.CreateTables();
-            StartProgramFillListBox();
+            FillBandListBox();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -41,7 +41,7 @@ namespace Band_Organizer
                     Band newBand = new Band { BandName = txtBandName.Text };
                     BandAlbumTrackDB.InsertBandName(newBand);
 
-                    StartProgramFillListBox();
+                    FillBandListBox();
 
                     txtBandName.Clear();
                     txtAlbumName.Focus();
@@ -66,19 +66,16 @@ namespace Band_Organizer
                     // album name is added to the listbox 
                     // then the textbox is cleared and focus is moved to the track name textbox
                     
-                    string bandName = lbBandList.SelectedItem.ToString().Trim();
                     Album newAlbum = new Album { 
                         AlbumTitle = txtAlbumName.Text, 
                         ReleaseDate = dtReleaseDate.Value.ToLocalTime()
                     };
 
+                    string bandName = lbBandList.SelectedItem.ToString().Trim();
                     BandAlbumTrackDB.InsertAlbumName(newAlbum, bandName);
-                    lbAlbumList.Items.Clear();
                     List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
-                    foreach (string album in albumList)
-                    {
-                        lbAlbumList.Items.Add(album);
-                    }
+
+                    FillListBox(albumList, lbAlbumList);
 
                     txtAlbumName.Clear();
                     dtReleaseDate.ResetText();
@@ -107,12 +104,8 @@ namespace Band_Organizer
                     string albumName = lbAlbumList.SelectedItem.ToString().Trim();
 
                     BandAlbumTrackDB.InsertTrackName(newTrack, albumName);
-                    lbTrackList.Items.Clear();
                     List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
-                    foreach (string track in trackList)
-                    {
-                        lbTrackList.Items.Add(track);
-                    }
+                    FillListBox(trackList, lbTrackList);
 
                     txtTrackName.Clear();
                     txtTrackName.Focus();
@@ -186,29 +179,28 @@ namespace Band_Organizer
                 return true;
         }
 
-        private void StartProgramFillListBox()
+        private void FillBandListBox()
         {
-            lbBandList.Items.Clear();
             List<string> bandList = BandAlbumTrackDB.FetchBandData();
-            foreach (string band in bandList)
-            {
-                lbBandList.Items.Add(band);
-            }
+            FillListBox(bandList, lbBandList);
         }
 
         private void lbBandList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string bandName = lbBandList.SelectedItem.ToString().Trim();
-            List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
-            FillListBox(albumList, lbAlbumList, lbTrackList);
+            if (lbBandList.SelectedItem == null)
+                MessageBox.Show("whoops");
+            else
+            {
+                string bandName = lbBandList.SelectedItem.ToString().Trim();
+                List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
+                FillListBox(albumList, lbAlbumList, lbTrackList);
+            }
         }
 
         private void lbAlbumList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbAlbumList.SelectedItem == null)
-            {
                 MessageBox.Show("whoops");
-            }
             else
             {
                 string albumName = lbAlbumList.SelectedItem.ToString().Trim();
@@ -232,14 +224,13 @@ namespace Band_Organizer
         private void FillListBox(List<string> list, ListBox listBox, 
                                  ListBox secondListBox = default(ListBox))
         {
+            listBox.HorizontalScrollbar = true;
             listBox.Items.Clear();
             if (secondListBox != null)
                 secondListBox.Items.Clear();
 
             foreach (string item in list)
-            {
                 listBox.Items.Add(item);
-            }
         }
     }
 }
