@@ -224,7 +224,6 @@ namespace Band_Organizer
         private void FillListBox(List<string> list, ListBox listBox, 
                                  ListBox secondListBox = default(ListBox))
         {
-            listBox.HorizontalScrollbar = true;
             listBox.Items.Clear();
             if (secondListBox != null)
                 secondListBox.Items.Clear();
