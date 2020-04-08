@@ -108,8 +108,8 @@ namespace Band_Organizer
                     string albumName = lbAlbumList.SelectedItem.ToString().Trim();
 
                     BandAlbumTrackDB.InsertTrackName(newTrack, albumName);
-                    List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
-                    FillListBox(trackList, lbTrackList);
+                    //List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
+                    //FillListBox(trackList, lbTrackList);
 
                     txtTrackName.Clear();
                     txtTrackNo.Clear();
@@ -210,8 +210,10 @@ namespace Band_Organizer
             else
             {
                 string albumName = lbAlbumList.SelectedItem.ToString().Trim();
-                List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
-                FillListBox(trackList, lbTrackList);
+                //List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
+                Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
+                //FillListBox(trackList, lbTrackList);
+                FillDictionary(trackList, lbTrackList);
             }
         }
 
@@ -236,6 +238,14 @@ namespace Band_Organizer
 
             foreach (string item in list)
                 listBox.Items.Add(item);
+        }
+
+        private void FillDictionary(Dictionary<int, string> tracks, ListBox listBox)
+        {
+            listBox.Items.Clear();
+
+            foreach (var item in tracks)
+                listBox.Items.Add(item.Key.ToString() + "\t" + item.Value);
         }
 
         private bool IsInt(TextBox textBox)

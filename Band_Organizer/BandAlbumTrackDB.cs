@@ -207,11 +207,12 @@ namespace Band_Organizer
             return albumList;
         }
 
-        public static List<string> FetchTrackData(string albumName)
+        public static Dictionary<int, string> FetchTrackData(string albumName)
         {
+            Dictionary<int, string> trackDict = new Dictionary<int, string>();
             List<string> trackList = new List<string>();
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatment = "SELECT Title FROM Tracks WHERE album_id = (SELECT id FROM Albums WHERE title = @name) ORDER BY track_no ASC";
+            string sqlStatment = "SELECT Track_No, Title FROM Tracks WHERE album_id = (SELECT id FROM Albums WHERE title = @name) ORDER BY track_no ASC";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -225,13 +226,16 @@ namespace Band_Organizer
                     {
                         while (reader.Read())
                         {
-                            trackList.Add(reader.GetString(0));
+                            //trackList.Add(reader.GetString(0));
+
+                            trackDict.Add(reader.GetInt32(0), reader.GetString(1));
                         }
                     }
                 }
             }
 
-            return trackList;
+            return trackDict;
+            //return trackList;
         }
     }
 }
