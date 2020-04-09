@@ -25,6 +25,7 @@ namespace Band_Organizer
         private void btnExit_Click(object sender, EventArgs e)
         {
             // closes the form
+
             this.Close();
         }
 
@@ -131,6 +132,7 @@ namespace Band_Organizer
                 BandAlbumTrackDB.ClearAllData();
 
                 // clears all data from textboxes and listboxes
+
                 txtBandName.Clear();
                 txtAlbumName.Clear();
                 txtTrackName.Clear();
@@ -147,6 +149,7 @@ namespace Band_Organizer
         private bool ClearAllData()
         {
             // warns user when attempting to clear all data
+
             string message = "Are you sure you want to clear all data?";
 
             DialogResult button =
@@ -162,6 +165,7 @@ namespace Band_Organizer
 
         private void FillBandListBox()
         {
+            // TODO: is this necessary?
             List<string> bandList = BandAlbumTrackDB.FetchBandData();
             FillListBox(bandList, lbBandList);
         }
@@ -170,6 +174,7 @@ namespace Band_Organizer
                                  ListBox secondListBox = default(ListBox))
         {
             // fills listbox with list items 
+
             listBox.Items.Clear();
             if (secondListBox != null)
                 secondListBox.Items.Clear();
@@ -181,6 +186,7 @@ namespace Band_Organizer
         private void FillDictionary(Dictionary<int, string> tracks, ListBox listBox)
         {
             // fills listbox with dictionary key-value pair
+
             listBox.Items.Clear();
 
             foreach (var item in tracks)
@@ -190,6 +196,7 @@ namespace Band_Organizer
         private void lbBandList_SelectedIndexChanged(object sender, EventArgs e)
         {
             // clears and refills band listbox when selected index changes
+
             if (lbBandList.SelectedItem == null)
                 MessageBox.Show("whoops");
             else
@@ -203,8 +210,9 @@ namespace Band_Organizer
         private void lbAlbumList_SelectedIndexChanged(object sender, EventArgs e)
         {
             // clears and refills albums listbox when selected index changes
+
             if (lbAlbumList.SelectedItem == null)
-                MessageBox.Show("whoops");
+                MessageBox.Show("whoops", "Whoops");
             else
             {
                 string albumName = lbAlbumList.SelectedItem.ToString().Trim();
@@ -216,10 +224,10 @@ namespace Band_Organizer
         private bool IsInList(TextBox textBox, ListBox listBox)
         {
             // returns true if textbox text is in listbox
+
             if (listBox.Items.Contains(textBox.Text))
             {
-                MessageBox.Show("This already exists in the database.",
-                                "Entry Error");
+                MessageBox.Show("This already exists in the database.", "Entry Error");
                 textBox.Focus();
                 return false;
             }
@@ -229,6 +237,7 @@ namespace Band_Organizer
         private bool IsInt(TextBox textBox)
         {
             // returns true if parameter is integer
+
             int x;
             if (int.TryParse(textBox.Text, out x))
                 return true;
@@ -242,10 +251,10 @@ namespace Band_Organizer
         private bool IsPresent(TextBox textBox, string name)
         {
             // checks if a textbox is empty, notifies user if false
+
             if (textBox.Text == "")
             {
-                MessageBox.Show(name + " is a required field.",
-                    "Entry Error");
+                MessageBox.Show(name + " is a required field.", "Entry Error");
                 textBox.Focus();
                 return false;
             }
