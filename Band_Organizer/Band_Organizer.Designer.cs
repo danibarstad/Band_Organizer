@@ -99,6 +99,7 @@
             // lbBandList
             // 
             this.lbBandList.FormattingEnabled = true;
+            this.lbBandList.HorizontalScrollbar = true;
             this.lbBandList.Location = new System.Drawing.Point(84, 87);
             this.lbBandList.Name = "lbBandList";
             this.lbBandList.Size = new System.Drawing.Size(188, 238);
@@ -109,6 +110,7 @@
             // lbAlbumList
             // 
             this.lbAlbumList.FormattingEnabled = true;
+            this.lbAlbumList.HorizontalScrollbar = true;
             this.lbAlbumList.Location = new System.Drawing.Point(359, 87);
             this.lbAlbumList.Name = "lbAlbumList";
             this.lbAlbumList.Size = new System.Drawing.Size(200, 238);
@@ -119,6 +121,7 @@
             // lbTrackList
             // 
             this.lbTrackList.FormattingEnabled = true;
+            this.lbTrackList.HorizontalScrollbar = true;
             this.lbTrackList.Location = new System.Drawing.Point(640, 87);
             this.lbTrackList.Name = "lbTrackList";
             this.lbTrackList.Size = new System.Drawing.Size(200, 238);
@@ -183,7 +186,7 @@
             this.btnExit.Location = new System.Drawing.Point(740, 366);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(100, 23);
-            this.btnExit.TabIndex = 8;
+            this.btnExit.TabIndex = 9;
             this.btnExit.Text = "E&xit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -193,7 +196,7 @@
             this.btnClearAll.Location = new System.Drawing.Point(634, 366);
             this.btnClearAll.Name = "btnClearAll";
             this.btnClearAll.Size = new System.Drawing.Size(100, 23);
-            this.btnClearAll.TabIndex = 7;
+            this.btnClearAll.TabIndex = 8;
             this.btnClearAll.Text = "Clear All";
             this.btnClearAll.UseVisualStyleBackColor = true;
             this.btnClearAll.Click += new System.EventHandler(this.btnClearAll_Click);

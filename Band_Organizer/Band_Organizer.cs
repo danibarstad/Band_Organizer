@@ -39,7 +39,7 @@ namespace Band_Organizer
                     // then clears the textbox and moves the focus to the album name textbox
 
                     Band newBand = new Band { BandName = txtBandName.Text };
-                    BandAlbumTrackDB.InsertBandName(newBand);
+                    BandAlbumTrackDB.InsertBand(newBand);
 
                     FillBandListBox();
 
@@ -72,7 +72,7 @@ namespace Band_Organizer
                     };
 
                     string bandName = lbBandList.SelectedItem.ToString().Trim();
-                    BandAlbumTrackDB.InsertAlbumName(newAlbum, bandName);
+                    BandAlbumTrackDB.InsertAlbum(newAlbum, bandName);
                     List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
 
                     FillListBox(albumList, lbAlbumList);
@@ -107,9 +107,9 @@ namespace Band_Organizer
                     };
                     string albumName = lbAlbumList.SelectedItem.ToString().Trim();
 
-                    BandAlbumTrackDB.InsertTrackName(newTrack, albumName);
-                    //List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
-                    //FillListBox(trackList, lbTrackList);
+                    BandAlbumTrackDB.InsertTrack(newTrack, albumName);
+                    Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
+                    FillDictionary(trackList, lbTrackList);
 
                     txtTrackName.Clear();
                     txtTrackNo.Clear();
@@ -144,19 +144,6 @@ namespace Band_Organizer
             }
         }
 
-        private bool IsPresent(TextBox textBox, string name)
-        {
-            // checks if a textbox is empty, notifies user if false
-            if (textBox.Text == "")
-            {
-                MessageBox.Show(name + " is a required field.", 
-                    "Entry Error");
-                textBox.Focus();
-                return false;
-            }
-            return true;
-        }
-
         private bool ClearAllData()
         {
             // warns user when attempting to clear all data
@@ -173,26 +160,36 @@ namespace Band_Organizer
                 return false;
         }
 
-        private bool IsSelected(ListBox listBox, string name)
-        {
-            // checks to make sure a band or album is selected before entering more input
-            if (listBox.SelectedIndex == -1)
-            {
-                MessageBox.Show("You must make a selection from " + name, "Entry Error");
-                return false;
-            }
-            else
-                return true;
-        }
-
         private void FillBandListBox()
         {
             List<string> bandList = BandAlbumTrackDB.FetchBandData();
             FillListBox(bandList, lbBandList);
         }
 
+        private void FillListBox(List<string> list, ListBox listBox,
+                                 ListBox secondListBox = default(ListBox))
+        {
+            // fills listbox with list items 
+            listBox.Items.Clear();
+            if (secondListBox != null)
+                secondListBox.Items.Clear();
+
+            foreach (string item in list)
+                listBox.Items.Add(item);
+        }
+
+        private void FillDictionary(Dictionary<int, string> tracks, ListBox listBox)
+        {
+            // fills listbox with dictionary key-value pair
+            listBox.Items.Clear();
+
+            foreach (var item in tracks)
+                listBox.Items.Add(item.Key.ToString() + "\t" + item.Value);
+        }
+
         private void lbBandList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // clears and refills band listbox when selected index changes
             if (lbBandList.SelectedItem == null)
                 MessageBox.Show("whoops");
             else
@@ -205,51 +202,33 @@ namespace Band_Organizer
 
         private void lbAlbumList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // clears and refills albums listbox when selected index changes
             if (lbAlbumList.SelectedItem == null)
                 MessageBox.Show("whoops");
             else
             {
                 string albumName = lbAlbumList.SelectedItem.ToString().Trim();
-                //List<string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
                 Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
-                //FillListBox(trackList, lbTrackList);
                 FillDictionary(trackList, lbTrackList);
             }
         }
 
         private bool IsInList(TextBox textBox, ListBox listBox)
         {
+            // returns true if textbox text is in listbox
             if (listBox.Items.Contains(textBox.Text))
             {
                 MessageBox.Show("This already exists in the database.",
-                    "Entry Error");
+                                "Entry Error");
                 textBox.Focus();
                 return false;
             }
             return true;
         }
 
-        private void FillListBox(List<string> list, ListBox listBox, 
-                                 ListBox secondListBox = default(ListBox))
-        {
-            listBox.Items.Clear();
-            if (secondListBox != null)
-                secondListBox.Items.Clear();
-
-            foreach (string item in list)
-                listBox.Items.Add(item);
-        }
-
-        private void FillDictionary(Dictionary<int, string> tracks, ListBox listBox)
-        {
-            listBox.Items.Clear();
-
-            foreach (var item in tracks)
-                listBox.Items.Add(item.Key.ToString() + "\t" + item.Value);
-        }
-
         private bool IsInt(TextBox textBox)
         {
+            // returns true if parameter is integer
             int x;
             if (int.TryParse(textBox.Text, out x))
                 return true;
@@ -258,6 +237,31 @@ namespace Band_Organizer
                 MessageBox.Show("Must be a numerical value.", "Value Error");
                 return false;
             }
+        }
+
+        private bool IsPresent(TextBox textBox, string name)
+        {
+            // checks if a textbox is empty, notifies user if false
+            if (textBox.Text == "")
+            {
+                MessageBox.Show(name + " is a required field.",
+                    "Entry Error");
+                textBox.Focus();
+                return false;
+            }
+            return true;
+        }
+
+        private bool IsSelected(ListBox listBox, string name)
+        {
+            // checks to make sure a band or album is selected before entering more input
+            if (listBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("You must make a selection from " + name, "Entry Error");
+                return false;
+            }
+            else
+                return true;
         }
     }
 }
