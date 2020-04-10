@@ -228,9 +228,11 @@ namespace Band_Organizer
             foreach (string item in listBox.Items)
             {
                 if (item.ToUpper() == textBox.Text.ToUpper())
+                {
                     MessageBox.Show("This already exists in the database.", "Entry Error");
-                textBox.Focus();
-                return false;
+                    textBox.Focus();
+                    return false;
+                }
             }
             return true;
         }
