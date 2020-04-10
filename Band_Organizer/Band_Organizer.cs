@@ -225,9 +225,10 @@ namespace Band_Organizer
         {
             // returns true if textbox text is in listbox
 
-            if (listBox.Items.Contains(textBox.Text))
+            foreach (string item in listBox.Items)
             {
-                MessageBox.Show("This already exists in the database.", "Entry Error");
+                if (item.ToUpper() == textBox.Text.ToUpper())
+                    MessageBox.Show("This already exists in the database.", "Entry Error");
                 textBox.Focus();
                 return false;
             }
