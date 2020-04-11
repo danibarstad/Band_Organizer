@@ -108,10 +108,12 @@ namespace Band_Organizer
                         TrackTitle = txtTrackName.Text,
                         TrackNumber = Int32.Parse(txtTrackNo.Text)
                     };
+                    string bandName = lbBandList.SelectedItem.ToString().Trim();
                     string albumName = lbAlbumList.SelectedItem.ToString().Trim();
 
-                    BandAlbumTrackDB.InsertTrack(newTrack, albumName);
-                    Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
+                    BandAlbumTrackDB.InsertTrack(newTrack, bandName, albumName);
+                    Dictionary<int, string> trackList = 
+                        BandAlbumTrackDB.FetchTrackData(bandName, albumName);
                     FillDictionary(trackList, lbTrackList);
 
                     txtTrackName.Clear();
@@ -217,8 +219,9 @@ namespace Band_Organizer
                 MessageBox.Show("whoops", "Whoops");
             else
             {
+                string bandName = lbBandList.SelectedItem.ToString().Trim();
                 string albumName = lbAlbumList.SelectedItem.ToString().Trim();
-                Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
+                Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(bandName, albumName);
                 FillDictionary(trackList, lbTrackList);
             }
         }

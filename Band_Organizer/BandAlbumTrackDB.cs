@@ -70,6 +70,7 @@ namespace Band_Organizer
                                         "id INT NOT NULL IDENTITY(1,1) PRIMARY KEY, " +
                                         "track_no INT, " +
                                         "title NVARCHAR(MAX), " +
+                                        "band_id INT FOREIGN KEY REFERENCES Bands(id), " +
                                         "album_id INT FOREIGN KEY REFERENCES Albums(id)" +
                                         ")";
 
@@ -130,13 +131,15 @@ namespace Band_Organizer
             }
         }
 
-        public static void InsertTrack(Tracks track, string album) 
+        public static void InsertTrack(Tracks track, string band, string album) 
         {
             // inserts track into Tracks table
 
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "INSERT INTO Tracks ([Track_No], [Title], [album_id]) " +
-                                  "VALUES (@trackNo, @title, (SELECT id FROM Albums WHERE title = @name ))";
+            string sqlStatement = "INSERT INTO Tracks ([Track_No], [Title], [band_id], [album_id]) " +
+                                  "VALUES (@trackNo, @title, " +
+                                  "(SELECT id FROM Bands WHERE name = @bandName), " +
+                                  "(SELECT id FROM Albums WHERE title = @albumName))";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -146,30 +149,15 @@ namespace Band_Organizer
                     cmd.Parameters.Add("@trackNo", SqlDbType.Int);
                     cmd.Parameters["@trackNo"].Value = track.TrackNumber;
 
-                    cmd.Parameters.Add("@name", SqlDbType.NVarChar);
-                    cmd.Parameters["@name"].Value = album;
-
                     cmd.Parameters.Add("@title", SqlDbType.NVarChar);
                     cmd.Parameters["@title"].Value = track.TrackTitle;
 
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
+                    cmd.Parameters.Add("@bandName", SqlDbType.NVarChar);
+                    cmd.Parameters["@bandName"].Value = band;
 
-        public static void ClearAllData() 
-        {
-            // clears everything from all tables and resets auto-increment primary keys
+                    cmd.Parameters.Add("@albumName", SqlDbType.NVarChar);
+                    cmd.Parameters["@albumName"].Value = album;
 
-            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Tracks; DELETE FROM Albums; DELETE FROM Bands;" +
-                                  "DBCC CHECKIDENT ('?', RESEED, 0);";
-
-            using (SqlConnection conn = new SqlConnection(connString))
-            {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
-                {
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -231,7 +219,7 @@ namespace Band_Organizer
             return albumList;
         }
 
-        public static Dictionary<int, string> FetchTrackData(string album)
+        public static Dictionary<int, string> FetchTrackData(string band, string album)
         {
             // return dictionary with track number and track name based on album name
 
@@ -239,7 +227,8 @@ namespace Band_Organizer
 
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatment = "SELECT Track_No, Title FROM Tracks " +
-                                 "WHERE album_id = (SELECT id FROM Albums WHERE title = @name) " +
+                                 "WHERE band_id = (SELECT id FROM Bands WHERE name = @bandName) AND " +
+                                 "album_id = (SELECT id FROM Albums WHERE title = @albumName) " +
                                  "ORDER BY track_no ASC";
 
             using (SqlConnection conn = new SqlConnection(connString))
@@ -247,8 +236,11 @@ namespace Band_Organizer
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sqlStatment, conn))
                 {
-                    cmd.Parameters.Add("@name", SqlDbType.NVarChar);
-                    cmd.Parameters["@name"].Value = album;
+                    cmd.Parameters.Add("bandName", SqlDbType.NVarChar);
+                    cmd.Parameters["bandName"].Value = band;
+
+                    cmd.Parameters.Add("@albumName", SqlDbType.NVarChar);
+                    cmd.Parameters["@albumName"].Value = album;
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -260,6 +252,24 @@ namespace Band_Organizer
                 }
             }
             return trackDict;
+        }
+
+        public static void ClearAllData()
+        {
+            // clears everything from all tables and resets auto-increment primary keys
+
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "DELETE FROM Tracks; DELETE FROM Albums; DELETE FROM Bands;" +
+                                  "DBCC CHECKIDENT ('?', RESEED, 0);";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
