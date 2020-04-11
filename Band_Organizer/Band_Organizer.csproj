@@ -58,6 +58,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracks.cs" />
+    <Compile Include="Validation.cs" />
     <EmbeddedResource Include="Band_Organizer.resx">
       <DependentUpon>Band_Organizer.cs</DependentUpon>
     </EmbeddedResource>

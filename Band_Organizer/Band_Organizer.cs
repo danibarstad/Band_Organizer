@@ -13,6 +13,8 @@ namespace Band_Organizer
 {
     public partial class Band_Organizer : Form
     {
+        Validation validate = new Validation();
+
         public Band_Organizer()
         {
             InitializeComponent();
@@ -33,8 +35,8 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtBandName, "Band Name") && 
-                    IsInList(txtBandName, lbBandList))
+                if (validate.IsPresent(txtBandName, "Band Name") && 
+                    validate.IsInList(txtBandName, lbBandList))
                 {
                     // the band name is added to the listbox 
                     // then clears the textbox and moves the focus to the album name textbox
@@ -60,9 +62,9 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtAlbumName, "Album Name")           && 
-                    IsSelected(lbBandList, lblBandName.Text)   && 
-                    IsInList(txtAlbumName, lbAlbumList))
+                if (validate.IsPresent(txtAlbumName, "Album Name")           && 
+                    validate.IsSelected(lbBandList, lblBandName.Text)   && 
+                    validate.IsInList(txtAlbumName, lbAlbumList))
                 {
                     // album name is added to the listbox 
                     // then the textbox is cleared and focus is moved to the track name textbox
@@ -95,10 +97,10 @@ namespace Band_Organizer
         {
             try
             {
-                if (IsPresent(txtTrackName, "Track Name")           &&
-                    IsSelected(lbAlbumList, lblAlbumName.Text)      &&
-                    IsInList(txtTrackName, lbTrackList)             &&
-                    IsInt(txtTrackNo))
+                if (validate.IsPresent(txtTrackName, "Track Name")           &&
+                    validate.IsSelected(lbAlbumList, lblAlbumName.Text)      &&
+                    validate.IsInList(txtTrackName, lbTrackList)             &&
+                    validate.IsInt(txtTrackNo))
                 {
                     // track name is added to the listbox then the textbox is cleared
 
@@ -219,61 +221,6 @@ namespace Band_Organizer
                 Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(albumName);
                 FillDictionary(trackList, lbTrackList);
             }
-        }
-
-        private bool IsInList(TextBox textBox, ListBox listBox)
-        {
-            // returns true if textbox text is in listbox
-
-            foreach (string item in listBox.Items)
-            {
-                if (item.ToUpper() == textBox.Text.ToUpper())
-                {
-                    MessageBox.Show("This already exists in the database.", "Entry Error");
-                    textBox.Focus();
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private bool IsInt(TextBox textBox)
-        {
-            // returns true if parameter is integer
-
-            int x;
-            if (int.TryParse(textBox.Text, out x))
-                return true;
-            else
-            {
-                MessageBox.Show("Must be a numerical value.", "Value Error");
-                return false;
-            }
-        }
-
-        private bool IsPresent(TextBox textBox, string name)
-        {
-            // checks if a textbox is empty, notifies user if false
-
-            if (textBox.Text == "")
-            {
-                MessageBox.Show(name + " is a required field.", "Entry Error");
-                textBox.Focus();
-                return false;
-            }
-            return true;
-        }
-
-        private bool IsSelected(ListBox listBox, string name)
-        {
-            // checks to make sure a band or album is selected before entering more input
-            if (listBox.SelectedIndex == -1)
-            {
-                MessageBox.Show("You must make a selection from " + name, "Entry Error");
-                return false;
-            }
-            else
-                return true;
         }
     }
 }
