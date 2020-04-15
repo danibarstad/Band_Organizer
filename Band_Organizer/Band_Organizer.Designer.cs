@@ -46,6 +46,7 @@
             this.btnClearAll = new System.Windows.Forms.Button();
             this.txtTrackNo = new System.Windows.Forms.TextBox();
             this.lblTrackNo = new System.Windows.Forms.Label();
+            this.btnViewAlbum = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblBandName
@@ -217,12 +218,23 @@
             this.lblTrackNo.TabIndex = 11;
             this.lblTrackNo.Text = "Track #:";
             // 
+            // btnViewAlbum
+            // 
+            this.btnViewAlbum.Location = new System.Drawing.Point(459, 58);
+            this.btnViewAlbum.Name = "btnViewAlbum";
+            this.btnViewAlbum.Size = new System.Drawing.Size(100, 23);
+            this.btnViewAlbum.TabIndex = 12;
+            this.btnViewAlbum.Text = "View Album";
+            this.btnViewAlbum.UseVisualStyleBackColor = true;
+            this.btnViewAlbum.Click += new System.EventHandler(this.btnViewAlbum_Click);
+            // 
             // Band_Organizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(861, 408);
+            this.Controls.Add(this.btnViewAlbum);
             this.Controls.Add(this.lblTrackNo);
             this.Controls.Add(this.txtTrackNo);
             this.Controls.Add(this.btnClearAll);
@@ -269,6 +281,7 @@
         private System.Windows.Forms.Button btnClearAll;
         private System.Windows.Forms.TextBox txtTrackNo;
         private System.Windows.Forms.Label lblTrackNo;
+        private System.Windows.Forms.Button btnViewAlbum;
     }
 }
 

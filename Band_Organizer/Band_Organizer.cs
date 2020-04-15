@@ -129,6 +129,24 @@ namespace Band_Organizer
             }
         }
 
+        private void btnViewAlbum_Click(object sender, EventArgs e)
+        {
+            string band = lbBandList.SelectedItem.ToString().Trim();
+            string album = lbAlbumList.SelectedItem.ToString().Trim();
+            Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(band, album);
+            string newTrackList = "";
+
+            foreach (var track in trackList)
+            {
+                newTrackList += $"{track.Key}\t{track.Value}\n";
+            }
+
+            MessageBox.Show($"Band:\t{band}\n" +
+                            $"Album:\t{album}\n" +
+                            $"Tracks:\n" +
+                            $"{newTrackList}", "Album Data");
+        }
+
         private void btnClearAll_Click(object sender, EventArgs e)
         {
             if (ClearAllData())
