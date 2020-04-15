@@ -243,5 +243,29 @@ namespace Band_Organizer
                 FillDictionary(trackList, lbTrackList);
             }
         }
+
+        private void btnDeleteBand_Click(object sender, EventArgs e)
+        {
+            string band = lbBandList.SelectedItem.ToString().Trim();
+
+            BandAlbumTrackDB.DeleteBand(band);
+        }
+
+        private void btnDeleteAlbum_Click(object sender, EventArgs e)
+        {
+            string band = lbBandList.SelectedItem.ToString().Trim();
+            string album = lbAlbumList.SelectedItem.ToString().Trim();
+
+            BandAlbumTrackDB.DeleteAlbum(band, album);
+        }
+
+        private void btnDeleteTrack_Click(object sender, EventArgs e)
+        {
+            string band = lbBandList.SelectedItem.ToString().Trim();
+            string album = lbAlbumList.SelectedItem.ToString().Trim();
+            string track = lbTrackList.SelectedItem.ToString().Trim();
+
+            BandAlbumTrackDB.DeleteTrack(band, album, track);
+        }
     }
 }

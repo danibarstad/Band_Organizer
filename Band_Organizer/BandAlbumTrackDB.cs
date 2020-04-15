@@ -236,8 +236,8 @@ namespace Band_Organizer
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sqlStatment, conn))
                 {
-                    cmd.Parameters.Add("bandName", SqlDbType.NVarChar);
-                    cmd.Parameters["bandName"].Value = band;
+                    cmd.Parameters.Add("@bandName", SqlDbType.NVarChar);
+                    cmd.Parameters["@bandName"].Value = band;
 
                     cmd.Parameters.Add("@albumName", SqlDbType.NVarChar);
                     cmd.Parameters["@albumName"].Value = album;
@@ -268,6 +268,66 @@ namespace Band_Organizer
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static bool DeleteTrack(string band, string album, string track)
+        {
+            // TODO: fix this
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "DELETE FROM Tracks WHERE title = @trackName";
+
+            using(SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using(SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.Parameters.Add("trackName", SqlDbType.NVarChar);
+                    cmd.Parameters["trackName"].Value = track;
+
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+            }
+        }
+
+        public static bool DeleteAlbum(string band, string album)
+        {
+            // TODO: finish this
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "DELETE FROM Albums WHERE title = @albumName;";
+
+            using(SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.Parameters.Add("@albumName", SqlDbType.NVarChar);
+                    cmd.Parameters["@albumName"].Value = album;
+
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+            }
+        }
+
+        public static bool DeleteBand(string band)
+        {
+            // TODO: finish this
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_COnnection=True;";
+            string sqlStatement = "DELETE FROM Bands WHERE name = @bandName;";
+
+            using(SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using(SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                {
+                    cmd.Parameters.Add("@bandName", SqlDbType.NVarChar);
+                    cmd.Parameters["@bandName"].Value = band;
+
+                    cmd.ExecuteNonQuery();
+                    return true;
                 }
             }
         }

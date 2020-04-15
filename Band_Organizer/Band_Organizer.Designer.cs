@@ -47,6 +47,9 @@
             this.txtTrackNo = new System.Windows.Forms.TextBox();
             this.lblTrackNo = new System.Windows.Forms.Label();
             this.btnViewAlbum = new System.Windows.Forms.Button();
+            this.btnDeleteBand = new System.Windows.Forms.Button();
+            this.btnDeleteAlbum = new System.Windows.Forms.Button();
+            this.btnDeleteTrack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblBandName
@@ -220,7 +223,7 @@
             // 
             // btnViewAlbum
             // 
-            this.btnViewAlbum.Location = new System.Drawing.Point(459, 58);
+            this.btnViewAlbum.Location = new System.Drawing.Point(359, 331);
             this.btnViewAlbum.Name = "btnViewAlbum";
             this.btnViewAlbum.Size = new System.Drawing.Size(100, 23);
             this.btnViewAlbum.TabIndex = 12;
@@ -228,12 +231,45 @@
             this.btnViewAlbum.UseVisualStyleBackColor = true;
             this.btnViewAlbum.Click += new System.EventHandler(this.btnViewAlbum_Click);
             // 
+            // btnDeleteBand
+            // 
+            this.btnDeleteBand.Location = new System.Drawing.Point(172, 331);
+            this.btnDeleteBand.Name = "btnDeleteBand";
+            this.btnDeleteBand.Size = new System.Drawing.Size(100, 23);
+            this.btnDeleteBand.TabIndex = 13;
+            this.btnDeleteBand.Text = "Delete Band";
+            this.btnDeleteBand.UseVisualStyleBackColor = true;
+            this.btnDeleteBand.Click += new System.EventHandler(this.btnDeleteBand_Click);
+            // 
+            // btnDeleteAlbum
+            // 
+            this.btnDeleteAlbum.Location = new System.Drawing.Point(459, 331);
+            this.btnDeleteAlbum.Name = "btnDeleteAlbum";
+            this.btnDeleteAlbum.Size = new System.Drawing.Size(100, 23);
+            this.btnDeleteAlbum.TabIndex = 14;
+            this.btnDeleteAlbum.Text = "Delete Album";
+            this.btnDeleteAlbum.UseVisualStyleBackColor = true;
+            this.btnDeleteAlbum.Click += new System.EventHandler(this.btnDeleteAlbum_Click);
+            // 
+            // btnDeleteTrack
+            // 
+            this.btnDeleteTrack.Location = new System.Drawing.Point(740, 331);
+            this.btnDeleteTrack.Name = "btnDeleteTrack";
+            this.btnDeleteTrack.Size = new System.Drawing.Size(100, 23);
+            this.btnDeleteTrack.TabIndex = 15;
+            this.btnDeleteTrack.Text = "Delete Track";
+            this.btnDeleteTrack.UseVisualStyleBackColor = true;
+            this.btnDeleteTrack.Click += new System.EventHandler(this.btnDeleteTrack_Click);
+            // 
             // Band_Organizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(861, 408);
+            this.Controls.Add(this.btnDeleteTrack);
+            this.Controls.Add(this.btnDeleteAlbum);
+            this.Controls.Add(this.btnDeleteBand);
             this.Controls.Add(this.btnViewAlbum);
             this.Controls.Add(this.lblTrackNo);
             this.Controls.Add(this.txtTrackNo);
@@ -282,6 +318,9 @@
         private System.Windows.Forms.TextBox txtTrackNo;
         private System.Windows.Forms.Label lblTrackNo;
         private System.Windows.Forms.Button btnViewAlbum;
+        private System.Windows.Forms.Button btnDeleteBand;
+        private System.Windows.Forms.Button btnDeleteAlbum;
+        private System.Windows.Forms.Button btnDeleteTrack;
     }
 }
 
