@@ -72,7 +72,7 @@ namespace Band_Organizer
                                         "title NVARCHAR(MAX), " +
                                         "band_id INT FOREIGN KEY REFERENCES Bands(id), " +
                                         "album_id INT FOREIGN KEY REFERENCES Albums(id)" +
-                                        ")";
+                                        ");";
 
             using(SqlConnection conn = new SqlConnection(connString))
             {
@@ -272,19 +272,20 @@ namespace Band_Organizer
             }
         }
 
-        public static bool DeleteTrack(string band, string album, string track)
+        public static bool DeleteBand(string band)
         {
-            // TODO: fix this
-            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Tracks WHERE title = @trackName";
+            // TODO: finish this
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_COnnection=True;";
+            string sqlStatement = "DELETE FROM Bands " +
+                                  "WHERE id = (SELECT id FROM Bands WHERE name = @bandName);";
 
-            using(SqlConnection conn = new SqlConnection(connString))
+            using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                using(SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
-                    cmd.Parameters.Add("trackName", SqlDbType.NVarChar);
-                    cmd.Parameters["trackName"].Value = track;
+                    cmd.Parameters.Add("@bandName", SqlDbType.NVarChar);
+                    cmd.Parameters["@bandName"].Value = band;
 
                     cmd.ExecuteNonQuery();
                     return true;
@@ -312,19 +313,19 @@ namespace Band_Organizer
             }
         }
 
-        public static bool DeleteBand(string band)
+        public static bool DeleteTrack(string band, string album, string[] track)
         {
-            // TODO: finish this
-            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_COnnection=True;";
-            string sqlStatement = "DELETE FROM Bands WHERE name = @bandName;";
+            // TODO: fix this
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "DELETE FROM Tracks WHERE title = @trackName";
 
-            using(SqlConnection conn = new SqlConnection(connString))
+            using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                using(SqlCommand cmd = new SqlCommand(sqlStatement, conn))
+                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
-                    cmd.Parameters.Add("@bandName", SqlDbType.NVarChar);
-                    cmd.Parameters["@bandName"].Value = band;
+                    cmd.Parameters.Add("trackName", SqlDbType.NVarChar);
+                    cmd.Parameters["trackName"].Value = track[1];
 
                     cmd.ExecuteNonQuery();
                     return true;

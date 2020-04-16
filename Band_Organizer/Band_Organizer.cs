@@ -263,9 +263,10 @@ namespace Band_Organizer
         {
             string band = lbBandList.SelectedItem.ToString().Trim();
             string album = lbAlbumList.SelectedItem.ToString().Trim();
-            string track = lbTrackList.SelectedItem.ToString().Trim();
+            string[] track = lbTrackList.SelectedItem.ToString().Split('\t');
 
             BandAlbumTrackDB.DeleteTrack(band, album, track);
+            BandAlbumTrackDB.FetchTrackData(band, album);
         }
     }
 }
