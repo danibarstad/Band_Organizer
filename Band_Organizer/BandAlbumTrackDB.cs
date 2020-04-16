@@ -275,9 +275,13 @@ namespace Band_Organizer
         public static bool DeleteBand(string band)
         {
             // TODO: finish this
-            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_COnnection=True;";
-            string sqlStatement = "DELETE FROM Bands " +
-                                  "WHERE id = (SELECT id FROM Bands WHERE name = @bandName);";
+            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
+            string sqlStatement = "DELETE FROM Tracks " +
+                                    "WHERE band_id = (SELECT id FROM Bands WHERE name = @bandName);" +
+                                  "DELETE FROM Albums " +
+                                    "WHERE band_id = (SELECT id FROM Bands WHERE name = @bandName);" +
+                                  "DELETE FROM Bands " +
+                                    "WHERE id = (SELECT id FROM Bands WHERE name = @bandName);";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -295,7 +299,6 @@ namespace Band_Organizer
 
         public static bool DeleteAlbum(string band, string album)
         {
-            // TODO: finish this
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "DELETE FROM Tracks WHERE album_id = " +
                                         "(SELECT id FROM Albums WHERE title = @albumName)" +
@@ -322,21 +325,24 @@ namespace Band_Organizer
 
         public static bool DeleteTrack(string band, string album, string[] track)
         {
-            // TODO: fix this
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Tracks WHERE title = @trackName AND band_id = " +
-                                  "(SELECT id FROM Bands WHERE name = @bandName);";
+            string sqlStatement = "DELETE FROM Tracks WHERE title = @trackName " +
+                                    "AND band_id = (SELECT id FROM Bands WHERE name = @bandName)" +
+                                    "AND album_id = (SELECT id FROM Albums WHERE title = @albumName);";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
                 {
-                    cmd.Parameters.Add("trackName", SqlDbType.NVarChar);
-                    cmd.Parameters["trackName"].Value = track[1];
+                    cmd.Parameters.Add("@trackName", SqlDbType.NVarChar);
+                    cmd.Parameters["@trackName"].Value = track[1];
 
-                    cmd.Parameters.Add("bandName", SqlDbType.NVarChar);
-                    cmd.Parameters["bandName"].Value = band;
+                    cmd.Parameters.Add("@bandName", SqlDbType.NVarChar);
+                    cmd.Parameters["@bandName"].Value = band;
+
+                    cmd.Parameters.Add("@albumName", SqlDbType.NVarChar);
+                    cmd.Parameters["@albumName"].Value = album;
 
                     cmd.ExecuteNonQuery();
                     return true;
