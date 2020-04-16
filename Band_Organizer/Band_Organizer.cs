@@ -257,6 +257,7 @@ namespace Band_Organizer
             string album = lbAlbumList.SelectedItem.ToString().Trim();
 
             BandAlbumTrackDB.DeleteAlbum(band, album);
+            FillListBox(BandAlbumTrackDB.FetchAlbumData(band), lbAlbumList);
         }
 
         private void btnDeleteTrack_Click(object sender, EventArgs e)
