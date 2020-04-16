@@ -317,7 +317,8 @@ namespace Band_Organizer
         {
             // TODO: fix this
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Tracks WHERE title = @trackName";
+            string sqlStatement = "DELETE FROM Tracks WHERE title = @trackName AND band_id = " +
+                                  "(SELECT id FROM Bands WHERE name = @bandName);";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -326,6 +327,9 @@ namespace Band_Organizer
                 {
                     cmd.Parameters.Add("trackName", SqlDbType.NVarChar);
                     cmd.Parameters["trackName"].Value = track[1];
+
+                    cmd.Parameters.Add("bandName", SqlDbType.NVarChar);
+                    cmd.Parameters["bandName"].Value = band;
 
                     cmd.ExecuteNonQuery();
                     return true;

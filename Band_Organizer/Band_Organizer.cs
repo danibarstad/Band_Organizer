@@ -266,7 +266,7 @@ namespace Band_Organizer
             string[] track = lbTrackList.SelectedItem.ToString().Split('\t');
 
             BandAlbumTrackDB.DeleteTrack(band, album, track);
-            BandAlbumTrackDB.FetchTrackData(band, album);
+            FillDictionary(BandAlbumTrackDB.FetchTrackData(band, album), lbTrackList);
         }
     }
 }
