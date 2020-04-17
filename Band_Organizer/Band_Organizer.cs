@@ -268,5 +268,6 @@ namespace Band_Organizer
             BandAlbumTrackDB.DeleteTrack(band, album, track);
             FillDictionary(BandAlbumTrackDB.FetchTrackData(band, album), lbTrackList);
         }
+
     }
 }
