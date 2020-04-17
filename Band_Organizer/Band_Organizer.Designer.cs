@@ -289,6 +289,7 @@
             this.Controls.Add(this.lblTrackName);
             this.Controls.Add(this.lblAlbumName);
             this.Controls.Add(this.lblBandName);
+            this.MaximizeBox = false;
             this.Name = "Band_Organizer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Band Organizer";
