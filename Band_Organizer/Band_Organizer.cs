@@ -279,6 +279,8 @@ namespace Band_Organizer
 
         private string TrimString(ListBox listBox)
         {
+            // gets selected item from listBox and trim any space
+
             return listBox.SelectedItem.ToString().Trim();
         }
     }
