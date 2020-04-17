@@ -11,25 +11,6 @@ namespace Band_Organizer
 {
     class BandAlbumTrackDB
     {
-        public static void DropDatabase()
-        {
-            // drops database
-            // TESTING PURPOSES ONLY
-            // TODO: ... make it work
-
-            string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DROP DATABASE IF EXISTS BandAlbumTracks;";
-
-            using (SqlConnection conn = new SqlConnection(connString))
-            {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(sqlStatement, conn))
-                {
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
         public static void CreateDatabase()
         {
             // creates database if it doesn't already exist
@@ -50,7 +31,7 @@ namespace Band_Organizer
 
         public static void CreateTables()
         {
-            // creats tables for database
+            // creates tables for database
 
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "IF OBJECT_ID('Bands') IS NULL\n" +
@@ -110,7 +91,7 @@ namespace Band_Organizer
 
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "INSERT INTO Albums ([Title], [Release_Date], [band_id]) " +
-                                  "VALUES (@title, @releaseDate, (SELECT id FROM Bands WHERE name = @name ))";
+                                  "VALUES (@title, @releaseDate, (SELECT id FROM Bands WHERE name = @name))";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -165,7 +146,7 @@ namespace Band_Organizer
 
         public static List<string> FetchBandData() 
         {
-            // returns list of bands
+            // returns list of all bands
 
             List<string> bandList = new List<string>();
 
@@ -190,13 +171,13 @@ namespace Band_Organizer
 
         public static List<string> FetchAlbumData(string band)
         {
-            // returns list of albums based on band name
+            // returns list of albums associated with given band
 
             List<string> albumList = new List<string>();
 
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "SELECT Title FROM Albums " +
-                                  "WHERE band_id = (SELECT id FROM Bands WHERE name = @name) " +
+                                    "WHERE band_id = (SELECT id FROM Bands WHERE name = @name) " +
                                   "ORDER BY release_date DESC";
 
             using (SqlConnection conn = new SqlConnection(connString))
@@ -221,14 +202,14 @@ namespace Band_Organizer
 
         public static Dictionary<int, string> FetchTrackData(string band, string album)
         {
-            // return dictionary with track number and track name based on album name
+            // return dictionary with track number and track name associated with given album and band
 
             Dictionary<int, string> trackDict = new Dictionary<int, string>();
 
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatment = "SELECT Track_No, Title FROM Tracks " +
-                                 "WHERE band_id = (SELECT id FROM Bands WHERE name = @bandName) AND " +
-                                 "album_id = (SELECT id FROM Albums WHERE title = @albumName) " +
+                                    "WHERE band_id = (SELECT id FROM Bands WHERE name = @bandName) " +
+                                    "AND album_id = (SELECT id FROM Albums WHERE title = @albumName) " +
                                  "ORDER BY track_no ASC";
 
             using (SqlConnection conn = new SqlConnection(connString))
@@ -259,8 +240,12 @@ namespace Band_Organizer
             // clears everything from all tables and resets auto-increment primary keys
 
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Tracks; DELETE FROM Albums; DELETE FROM Bands;" +
-                                  "DBCC CHECKIDENT ('?', RESEED, 0);";
+            string sqlStatement = "DELETE FROM Tracks; " +
+                                  "DELETE FROM Albums; " +
+                                  "DELETE FROM Bands;" +
+                                  "DBCC CHECKIDENT ('Tracks', RESEED, 0);" +
+                                  "DBCC CHECKIDENT ('Albums', RESEED, 0);" +
+                                  "DBCC CHECKIDENT ('Bands', RESEED, 0);";
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -274,7 +259,8 @@ namespace Band_Organizer
 
         public static bool DeleteBand(string band)
         {
-            // TODO: finish this
+            // deletes selected band from database and all albums and tracks associated with it
+
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
             string sqlStatement = "DELETE FROM Tracks " +
                                     "WHERE band_id = (SELECT id FROM Bands WHERE name = @bandName);" +
@@ -299,11 +285,12 @@ namespace Band_Organizer
 
         public static bool DeleteAlbum(string band, string album)
         {
+            // deletes selected album and all tracks associated with it
+
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Tracks WHERE album_id = " +
-                                        "(SELECT id FROM Albums WHERE title = @albumName)" +
-                                    "AND band_id = " +
-                                        "(SELECT id FROM Bands WHERE name = @bandName);" +
+            string sqlStatement = "DELETE FROM Tracks " +
+                                    "WHERE album_id = (SELECT id FROM Albums WHERE title = @albumName)" +
+                                    "AND band_id = (SELECT id FROM Bands WHERE name = @bandName);" +
                                   "DELETE FROM Albums WHERE title = @albumName;";
 
             using(SqlConnection conn = new SqlConnection(connString))
@@ -325,8 +312,11 @@ namespace Band_Organizer
 
         public static bool DeleteTrack(string band, string album, string[] track)
         {
+            // deletes selected track
+
             string connString = "Server=localhost;Database=BandAlbumTracks;Trusted_Connection=True;";
-            string sqlStatement = "DELETE FROM Tracks WHERE title = @trackName " +
+            string sqlStatement = "DELETE FROM Tracks " +
+                                    "WHERE title = @trackName " +
                                     "AND band_id = (SELECT id FROM Bands WHERE name = @bandName)" +
                                     "AND album_id = (SELECT id FROM Albums WHERE title = @albumName);";
 

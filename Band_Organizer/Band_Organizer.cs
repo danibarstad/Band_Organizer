@@ -18,7 +18,6 @@ namespace Band_Organizer
         public Band_Organizer()
         {
             InitializeComponent();
-            //BandAlbumTrackDB.DropDatabase();        // FOR TESTING ONLY. Comment this line out to not drop existing database
             BandAlbumTrackDB.CreateDatabase();
             BandAlbumTrackDB.CreateTables();
             FillListBox(BandAlbumTrackDB.FetchBandData(), lbBandList);
@@ -132,6 +131,8 @@ namespace Band_Organizer
 
         private void btnViewAlbum_Click(object sender, EventArgs e)
         {
+            // displays windows with all data for the selected album
+
             string band = lbBandList.SelectedItem.ToString().Trim();
             string album = lbAlbumList.SelectedItem.ToString().Trim();
             Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(band, album);
@@ -217,7 +218,7 @@ namespace Band_Organizer
             // clears and refills band listbox when selected index changes
 
             if (lbBandList.SelectedItem == null)
-                MessageBox.Show("whoops");
+                MessageBox.Show("Please select an item from the list.", "Whoops");
             else
             {
                 string bandName = lbBandList.SelectedItem.ToString().Trim();
@@ -231,7 +232,7 @@ namespace Band_Organizer
             // clears and refills albums listbox when selected index changes
 
             if (lbAlbumList.SelectedItem == null)
-                MessageBox.Show("whoops", "Whoops");
+                MessageBox.Show("Please select an item from the list.", "Whoops");
             else
             {
                 string bandName = lbBandList.SelectedItem.ToString().Trim();
@@ -244,6 +245,8 @@ namespace Band_Organizer
 
         private void btnDeleteBand_Click(object sender, EventArgs e)
         {
+            // deletes band (and associated albums and tracks) from database
+
             string band = lbBandList.SelectedItem.ToString().Trim();
 
             BandAlbumTrackDB.DeleteBand(band);
@@ -252,6 +255,8 @@ namespace Band_Organizer
 
         private void btnDeleteAlbum_Click(object sender, EventArgs e)
         {
+            // deletes album (and associated tracks) from database
+
             string band = lbBandList.SelectedItem.ToString().Trim();
             string album = lbAlbumList.SelectedItem.ToString().Trim();
 
@@ -261,6 +266,8 @@ namespace Band_Organizer
 
         private void btnDeleteTrack_Click(object sender, EventArgs e)
         {
+            // deletes track from database
+
             string band = lbBandList.SelectedItem.ToString().Trim();
             string album = lbAlbumList.SelectedItem.ToString().Trim();
             string[] track = lbTrackList.SelectedItem.ToString().Split('\t');
