@@ -18,9 +18,9 @@ namespace Band_Organizer
         public Band_Organizer()
         {
             InitializeComponent();
-            BandAlbumTrackDB.CreateDatabase();
-            BandAlbumTrackDB.CreateTables();
-            FillListBox(BandAlbumTrackDB.FetchBandData(), lbBandList);
+            BandAlbumTrackDB.CreateDatabase();                              // Create database
+            BandAlbumTrackDB.CreateTables();                                // Create tables
+            FillListBox(BandAlbumTrackDB.FetchBandData(), lbBandList);      // Fill band listbox
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -34,17 +34,18 @@ namespace Band_Organizer
         {
             try
             {
-                if (validate.IsPresent(txtBandName, "Band Name") && 
-                    validate.IsInList(txtBandName, lbBandList))
+                if (validate.IsInList(txtBandName, lbBandList)      &&
+                    validate.IsPresent(txtBandName, "Band Name"))
                 {
                     // the band name is added to the listbox 
                     // then clears the textbox and moves the focus to the album name textbox
 
-                    Band newBand = new Band { BandName = txtBandName.Text };
-                    BandAlbumTrackDB.InsertBand(newBand);
+                    Band newBand = new Band { 
+                        BandName = txtBandName.Text };
+                    List<string> bandList = BandAlbumTrackDB.FetchBandData();
 
-                    FillListBox(BandAlbumTrackDB.FetchBandData(), 
-                                lbBandList, lbAlbumList, lbTrackList);
+                    BandAlbumTrackDB.InsertBand(newBand);
+                    FillListBox(bandList, lbBandList, lbAlbumList, lbTrackList);
 
                     txtBandName.Clear();
                     txtAlbumName.Focus();
@@ -62,22 +63,20 @@ namespace Band_Organizer
         {
             try
             {
-                if (validate.IsPresent(txtAlbumName, "Album Name")          && 
-                    validate.IsSelected(lbBandList, lblBandName.Text)       && 
-                    validate.IsInList(txtAlbumName, lbAlbumList))
+                if (validate.IsInList(txtAlbumName, lbAlbumList)            &&
+                    validate.IsPresent(txtAlbumName, "Album Name")          && 
+                    validate.IsSelected(lbBandList, lblBandName.Text))
                 {
                     // album name is added to the listbox 
                     // then the textbox is cleared and focus is moved to the track name textbox
                     
                     Album newAlbum = new Album { 
                         AlbumTitle = txtAlbumName.Text, 
-                        ReleaseDate = dtReleaseDate.Value.ToLocalTime()
-                    };
-
+                        ReleaseDate = dtReleaseDate.Value.ToLocalTime()};
                     string bandName = TrimString(lbBandList);
-                    BandAlbumTrackDB.InsertAlbum(newAlbum, bandName);
                     List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
 
+                    BandAlbumTrackDB.InsertAlbum(newAlbum, bandName);
                     FillListBox(albumList, lbAlbumList, lbTrackList);
 
                     txtAlbumName.Clear();
@@ -97,23 +96,22 @@ namespace Band_Organizer
         {
             try
             {
-                if (validate.IsPresent(txtTrackName, "Track Name")           &&
-                    validate.IsSelected(lbAlbumList, lblAlbumName.Text)      &&
-                    validate.IsInList(txtTrackName, lbTrackList)             &&
-                    validate.IsInt(txtTrackNo))
+                if (validate.IsInt(txtTrackNo)                              &&
+                    validate.IsInList(txtTrackName, lbTrackList)            &&
+                    validate.IsPresent(txtTrackName, "Track Name")          &&
+                    validate.IsSelected(lbAlbumList, lblAlbumName.Text))
                 {
                     // track name is added to the listbox then the textbox is cleared
 
                     Tracks newTrack = new Tracks { 
                         TrackTitle = txtTrackName.Text,
-                        TrackNumber = Int32.Parse(txtTrackNo.Text)
-                    };
+                        TrackNumber = Int32.Parse(txtTrackNo.Text)};
                     string bandName = TrimString(lbBandList);
                     string albumName = TrimString(lbAlbumList);
+                    Dictionary<int, string> trackList =
+                        BandAlbumTrackDB.FetchTrackData(bandName, albumName);
 
                     BandAlbumTrackDB.InsertTrack(newTrack, bandName, albumName);
-                    Dictionary<int, string> trackList = 
-                        BandAlbumTrackDB.FetchTrackData(bandName, albumName);
                     FillDictionary(trackList, lbTrackList);
 
                     txtTrackName.Clear();
@@ -133,10 +131,10 @@ namespace Band_Organizer
         {
             // displays windows with all data for the selected album
 
+            string newTrackList = "";
             string band = TrimString(lbBandList);
             string album = TrimString(lbAlbumList);
             Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(band, album);
-            string newTrackList = "";
 
             foreach (var track in trackList)
             {
@@ -157,10 +155,10 @@ namespace Band_Organizer
 
                 // clears all data from textboxes and listboxes
 
+                txtTrackNo.Clear();
                 txtBandName.Clear();
                 txtAlbumName.Clear();
                 txtTrackName.Clear();
-                txtTrackNo.Clear();
 
                 dtReleaseDate.ResetText();
 
@@ -174,11 +172,10 @@ namespace Band_Organizer
         {
             // warns user when attempting to clear all data
 
-            string message = "Are you sure you want to clear all data? " +
-                             "This will delete all data from the database.";
-
             DialogResult button =
-                MessageBox.Show(message, "Warning",
+                MessageBox.Show("Are you sure you want to clear all data? " +
+                                "This will delete all data from the database.", 
+                                "Warning",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Warning);
 
@@ -219,7 +216,8 @@ namespace Band_Organizer
             // clears and refills band listbox when selected index changes
 
             if (lbBandList.SelectedItem == null)
-                MessageBox.Show("Please select an item from the list.", "Whoops");
+                MessageBox.Show("Please select an item from the list.", 
+                                "Whoops");
             else
             {
                 string bandName = TrimString(lbBandList);
@@ -233,13 +231,15 @@ namespace Band_Organizer
             // clears and refills albums listbox when selected index changes
 
             if (lbAlbumList.SelectedItem == null)
-                MessageBox.Show("Please select an item from the list.", "Whoops");
+                MessageBox.Show("Please select an item from the list.", 
+                                "Whoops");
             else
             {
                 string bandName = TrimString(lbBandList);
                 string albumName = TrimString(lbAlbumList);
                 Dictionary<int, string> trackList = 
                     BandAlbumTrackDB.FetchTrackData(bandName, albumName);
+
                 FillDictionary(trackList, lbTrackList);
             }
         }
@@ -249,9 +249,10 @@ namespace Band_Organizer
             // deletes band (and associated albums and tracks) from database
 
             string band = TrimString(lbBandList);
+            List<string> albumList = BandAlbumTrackDB.FetchAlbumData(band);
 
             BandAlbumTrackDB.DeleteBand(band);
-            FillListBox(BandAlbumTrackDB.FetchAlbumData(band), lbBandList, lbAlbumList, lbTrackList);
+            FillListBox(albumList, lbBandList, lbAlbumList, lbTrackList);
         }
 
         private void btnDeleteAlbum_Click(object sender, EventArgs e)
@@ -260,9 +261,10 @@ namespace Band_Organizer
 
             string band = TrimString(lbBandList);
             string album = TrimString(lbAlbumList);
+            List<string> albumList = BandAlbumTrackDB.FetchAlbumData(band);
 
             BandAlbumTrackDB.DeleteAlbum(band, album);
-            FillListBox(BandAlbumTrackDB.FetchAlbumData(band), lbAlbumList, lbTrackList);
+            FillListBox(albumList, lbAlbumList, lbTrackList);
         }
 
         private void btnDeleteTrack_Click(object sender, EventArgs e)
@@ -272,9 +274,10 @@ namespace Band_Organizer
             string band = TrimString(lbBandList);
             string album = TrimString(lbAlbumList);
             string[] track = lbTrackList.SelectedItem.ToString().Split('\t');
+            Dictionary<int, string> trackDict = BandAlbumTrackDB.FetchTrackData(band, album);
 
             BandAlbumTrackDB.DeleteTrack(band, album, track);
-            FillDictionary(BandAlbumTrackDB.FetchTrackData(band, album), lbTrackList);
+            FillDictionary(trackDict, lbTrackList);
         }
 
         private string TrimString(ListBox listBox)
