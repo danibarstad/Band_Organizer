@@ -131,20 +131,23 @@ namespace Band_Organizer
         {
             // displays windows with all data for the selected album
 
-            string newTrackList = "";
-            string band = TrimString(lbBandList);
-            string album = TrimString(lbAlbumList);
-            Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(band, album);
-
-            foreach (var track in trackList)
+            if (validate.IsSelected(lbAlbumList, "Album List"))
             {
-                newTrackList += $"{track.Key}\t{track.Value}\n";
-            }
+                string newTrackList = "";
+                string band = TrimString(lbBandList);
+                string album = TrimString(lbAlbumList);
+                Dictionary<int, string> trackList = BandAlbumTrackDB.FetchTrackData(band, album);
 
-            MessageBox.Show($"Band:\t{band}\n"                  +
-                            $"Album:\t{album}\n"                +
-                            $"Tracks:\n"                        +
-                            $"{newTrackList}", "Album Data");
+                foreach (var track in trackList)
+                {
+                    newTrackList += $"{track.Key}\t{track.Value}\n";
+                }
+
+                MessageBox.Show($"Band:\t{band}\n" +
+                                $"Album:\t{album}\n" +
+                                $"Tracks:\n" +
+                                $"{newTrackList}", "Album Data");
+            }
         }
 
         private void btnClearAll_Click(object sender, EventArgs e)
@@ -266,9 +269,9 @@ namespace Band_Organizer
             {
                 string band = TrimString(lbBandList);
                 string album = TrimString(lbAlbumList);
-                List<string> albumList = BandAlbumTrackDB.FetchAlbumData(band);
-
                 BandAlbumTrackDB.DeleteAlbum(band, album);
+
+                List<string> albumList = BandAlbumTrackDB.FetchAlbumData(band);                
                 FillListBox(albumList, lbAlbumList, lbTrackList);
             }
         }
@@ -282,9 +285,9 @@ namespace Band_Organizer
                 string band = TrimString(lbBandList);
                 string album = TrimString(lbAlbumList);
                 string[] track = lbTrackList.SelectedItem.ToString().Split('\t');
-                Dictionary<int, string> trackDict = BandAlbumTrackDB.FetchTrackData(band, album);
-
                 BandAlbumTrackDB.DeleteTrack(band, album, track);
+
+                Dictionary<int, string> trackDict = BandAlbumTrackDB.FetchTrackData(band, album);                
                 FillDictionary(trackDict, lbTrackList);
             }
         }
