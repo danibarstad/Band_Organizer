@@ -262,25 +262,31 @@ namespace Band_Organizer
         {
             // deletes album (and associated tracks) from database
 
-            string band = TrimString(lbBandList);
-            string album = TrimString(lbAlbumList);
-            List<string> albumList = BandAlbumTrackDB.FetchAlbumData(band);
+            if (validate.IsSelected(lbAlbumList, "Album List"))
+            {
+                string band = TrimString(lbBandList);
+                string album = TrimString(lbAlbumList);
+                List<string> albumList = BandAlbumTrackDB.FetchAlbumData(band);
 
-            BandAlbumTrackDB.DeleteAlbum(band, album);
-            FillListBox(albumList, lbAlbumList, lbTrackList);
+                BandAlbumTrackDB.DeleteAlbum(band, album);
+                FillListBox(albumList, lbAlbumList, lbTrackList);
+            }
         }
 
         private void btnDeleteTrack_Click(object sender, EventArgs e)
         {
             // deletes track from database
 
-            string band = TrimString(lbBandList);
-            string album = TrimString(lbAlbumList);
-            string[] track = lbTrackList.SelectedItem.ToString().Split('\t');
-            Dictionary<int, string> trackDict = BandAlbumTrackDB.FetchTrackData(band, album);
+            if (validate.IsSelected(lbTrackList, "Track List"))
+            {
+                string band = TrimString(lbBandList);
+                string album = TrimString(lbAlbumList);
+                string[] track = lbTrackList.SelectedItem.ToString().Split('\t');
+                Dictionary<int, string> trackDict = BandAlbumTrackDB.FetchTrackData(band, album);
 
-            BandAlbumTrackDB.DeleteTrack(band, album, track);
-            FillDictionary(trackDict, lbTrackList);
+                BandAlbumTrackDB.DeleteTrack(band, album, track);
+                FillDictionary(trackDict, lbTrackList);
+            }
         }
 
         private string TrimString(ListBox listBox)
