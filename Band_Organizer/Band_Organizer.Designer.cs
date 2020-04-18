@@ -108,7 +108,6 @@
             this.lbBandList.Name = "lbBandList";
             this.lbBandList.Size = new System.Drawing.Size(186, 238);
             this.lbBandList.TabIndex = 3;
-            this.lbBandList.TabStop = false;
             this.lbBandList.SelectedIndexChanged += new System.EventHandler(this.lbBandList_SelectedIndexChanged);
             // 
             // lbAlbumList
@@ -119,7 +118,6 @@
             this.lbAlbumList.Name = "lbAlbumList";
             this.lbAlbumList.Size = new System.Drawing.Size(186, 238);
             this.lbAlbumList.TabIndex = 8;
-            this.lbAlbumList.TabStop = false;
             this.lbAlbumList.SelectedIndexChanged += new System.EventHandler(this.lbAlbumList_SelectedIndexChanged);
             // 
             // lbTrackList
@@ -130,7 +128,6 @@
             this.lbTrackList.Name = "lbTrackList";
             this.lbTrackList.Size = new System.Drawing.Size(185, 238);
             this.lbTrackList.TabIndex = 13;
-            this.lbTrackList.TabStop = false;
             // 
             // lblReleaseDate
             // 
