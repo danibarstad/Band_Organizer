@@ -98,7 +98,7 @@
             this.txtTrackName.Location = new System.Drawing.Point(626, 6);
             this.txtTrackName.Name = "txtTrackName";
             this.txtTrackName.Size = new System.Drawing.Size(185, 20);
-            this.txtTrackName.TabIndex = 9;
+            this.txtTrackName.TabIndex = 10;
             // 
             // lbBandList
             // 
@@ -127,7 +127,7 @@
             this.lbTrackList.Location = new System.Drawing.Point(626, 87);
             this.lbTrackList.Name = "lbTrackList";
             this.lbTrackList.Size = new System.Drawing.Size(185, 238);
-            this.lbTrackList.TabIndex = 13;
+            this.lbTrackList.TabIndex = 14;
             // 
             // lblReleaseDate
             // 
@@ -176,7 +176,7 @@
             this.btnAddTrack.Location = new System.Drawing.Point(625, 58);
             this.btnAddTrack.Name = "btnAddTrack";
             this.btnAddTrack.Size = new System.Drawing.Size(90, 23);
-            this.btnAddTrack.TabIndex = 11;
+            this.btnAddTrack.TabIndex = 12;
             this.btnAddTrack.Text = "Add Track";
             this.btnAddTrack.UseVisualStyleBackColor = true;
             this.btnAddTrack.Click += new System.EventHandler(this.btnAddTrack_Click);
@@ -187,7 +187,7 @@
             this.btnExit.Location = new System.Drawing.Point(626, 361);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(185, 23);
-            this.btnExit.TabIndex = 15;
+            this.btnExit.TabIndex = 16;
             this.btnExit.Text = "E&xit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -197,7 +197,7 @@
             this.btnClearAll.Location = new System.Drawing.Point(626, 331);
             this.btnClearAll.Name = "btnClearAll";
             this.btnClearAll.Size = new System.Drawing.Size(185, 23);
-            this.btnClearAll.TabIndex = 14;
+            this.btnClearAll.TabIndex = 15;
             this.btnClearAll.Text = "Clear All";
             this.btnClearAll.UseVisualStyleBackColor = true;
             this.btnClearAll.Click += new System.EventHandler(this.btnClearAll_Click);
@@ -207,7 +207,7 @@
             this.txtTrackNo.Location = new System.Drawing.Point(626, 32);
             this.txtTrackNo.Name = "txtTrackNo";
             this.txtTrackNo.Size = new System.Drawing.Size(31, 20);
-            this.txtTrackNo.TabIndex = 10;
+            this.txtTrackNo.TabIndex = 11;
             // 
             // lblTrackNo
             // 
@@ -223,7 +223,7 @@
             this.btnViewAlbum.Location = new System.Drawing.Point(359, 331);
             this.btnViewAlbum.Name = "btnViewAlbum";
             this.btnViewAlbum.Size = new System.Drawing.Size(186, 23);
-            this.btnViewAlbum.TabIndex = 12;
+            this.btnViewAlbum.TabIndex = 9;
             this.btnViewAlbum.Text = "View Album";
             this.btnViewAlbum.UseVisualStyleBackColor = true;
             this.btnViewAlbum.Click += new System.EventHandler(this.btnViewAlbum_Click);
@@ -253,7 +253,7 @@
             this.btnDeleteTrack.Location = new System.Drawing.Point(721, 58);
             this.btnDeleteTrack.Name = "btnDeleteTrack";
             this.btnDeleteTrack.Size = new System.Drawing.Size(90, 23);
-            this.btnDeleteTrack.TabIndex = 12;
+            this.btnDeleteTrack.TabIndex = 13;
             this.btnDeleteTrack.Text = "Delete Track";
             this.btnDeleteTrack.UseVisualStyleBackColor = true;
             this.btnDeleteTrack.Click += new System.EventHandler(this.btnDeleteTrack_Click);
