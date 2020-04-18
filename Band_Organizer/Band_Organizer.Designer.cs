@@ -64,7 +64,7 @@
             // lblAlbumName
             // 
             this.lblAlbumName.AutoSize = true;
-            this.lblAlbumName.Location = new System.Drawing.Point(278, 9);
+            this.lblAlbumName.Location = new System.Drawing.Point(276, 9);
             this.lblAlbumName.Name = "lblAlbumName";
             this.lblAlbumName.Size = new System.Drawing.Size(70, 13);
             this.lblAlbumName.TabIndex = 1;
@@ -73,7 +73,7 @@
             // lblTrackName
             // 
             this.lblTrackName.AutoSize = true;
-            this.lblTrackName.Location = new System.Drawing.Point(565, 9);
+            this.lblTrackName.Location = new System.Drawing.Point(551, 9);
             this.lblTrackName.Name = "lblTrackName";
             this.lblTrackName.Size = new System.Drawing.Size(69, 13);
             this.lblTrackName.TabIndex = 2;
@@ -83,21 +83,21 @@
             // 
             this.txtBandName.Location = new System.Drawing.Point(84, 6);
             this.txtBandName.Name = "txtBandName";
-            this.txtBandName.Size = new System.Drawing.Size(188, 20);
+            this.txtBandName.Size = new System.Drawing.Size(186, 20);
             this.txtBandName.TabIndex = 0;
             // 
             // txtAlbumName
             // 
             this.txtAlbumName.Location = new System.Drawing.Point(359, 6);
             this.txtAlbumName.Name = "txtAlbumName";
-            this.txtAlbumName.Size = new System.Drawing.Size(200, 20);
+            this.txtAlbumName.Size = new System.Drawing.Size(186, 20);
             this.txtAlbumName.TabIndex = 2;
             // 
             // txtTrackName
             // 
-            this.txtTrackName.Location = new System.Drawing.Point(640, 6);
+            this.txtTrackName.Location = new System.Drawing.Point(626, 6);
             this.txtTrackName.Name = "txtTrackName";
-            this.txtTrackName.Size = new System.Drawing.Size(200, 20);
+            this.txtTrackName.Size = new System.Drawing.Size(185, 20);
             this.txtTrackName.TabIndex = 5;
             // 
             // lbBandList
@@ -106,7 +106,7 @@
             this.lbBandList.HorizontalScrollbar = true;
             this.lbBandList.Location = new System.Drawing.Point(84, 87);
             this.lbBandList.Name = "lbBandList";
-            this.lbBandList.Size = new System.Drawing.Size(188, 238);
+            this.lbBandList.Size = new System.Drawing.Size(186, 238);
             this.lbBandList.TabIndex = 6;
             this.lbBandList.TabStop = false;
             this.lbBandList.SelectedIndexChanged += new System.EventHandler(this.lbBandList_SelectedIndexChanged);
@@ -117,7 +117,7 @@
             this.lbAlbumList.HorizontalScrollbar = true;
             this.lbAlbumList.Location = new System.Drawing.Point(359, 87);
             this.lbAlbumList.Name = "lbAlbumList";
-            this.lbAlbumList.Size = new System.Drawing.Size(200, 238);
+            this.lbAlbumList.Size = new System.Drawing.Size(186, 238);
             this.lbAlbumList.TabIndex = 7;
             this.lbAlbumList.TabStop = false;
             this.lbAlbumList.SelectedIndexChanged += new System.EventHandler(this.lbAlbumList_SelectedIndexChanged);
@@ -126,16 +126,16 @@
             // 
             this.lbTrackList.FormattingEnabled = true;
             this.lbTrackList.HorizontalScrollbar = true;
-            this.lbTrackList.Location = new System.Drawing.Point(640, 87);
+            this.lbTrackList.Location = new System.Drawing.Point(626, 87);
             this.lbTrackList.Name = "lbTrackList";
-            this.lbTrackList.Size = new System.Drawing.Size(200, 238);
+            this.lbTrackList.Size = new System.Drawing.Size(185, 238);
             this.lbTrackList.TabIndex = 8;
             this.lbTrackList.TabStop = false;
             // 
             // lblReleaseDate
             // 
             this.lblReleaseDate.AutoSize = true;
-            this.lblReleaseDate.Location = new System.Drawing.Point(278, 38);
+            this.lblReleaseDate.Location = new System.Drawing.Point(276, 38);
             this.lblReleaseDate.Name = "lblReleaseDate";
             this.lblReleaseDate.Size = new System.Drawing.Size(75, 13);
             this.lblReleaseDate.TabIndex = 9;
@@ -156,7 +156,7 @@
             this.btnAddBand.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAddBand.Location = new System.Drawing.Point(84, 58);
             this.btnAddBand.Name = "btnAddBand";
-            this.btnAddBand.Size = new System.Drawing.Size(100, 23);
+            this.btnAddBand.Size = new System.Drawing.Size(90, 23);
             this.btnAddBand.TabIndex = 1;
             this.btnAddBand.Text = "Add Band";
             this.btnAddBand.UseVisualStyleBackColor = true;
@@ -167,7 +167,7 @@
             this.btnAddAlbum.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAddAlbum.Location = new System.Drawing.Point(359, 58);
             this.btnAddAlbum.Name = "btnAddAlbum";
-            this.btnAddAlbum.Size = new System.Drawing.Size(100, 23);
+            this.btnAddAlbum.Size = new System.Drawing.Size(90, 23);
             this.btnAddAlbum.TabIndex = 4;
             this.btnAddAlbum.Text = "Add Album";
             this.btnAddAlbum.UseVisualStyleBackColor = true;
@@ -176,9 +176,9 @@
             // btnAddTrack
             // 
             this.btnAddTrack.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnAddTrack.Location = new System.Drawing.Point(640, 58);
+            this.btnAddTrack.Location = new System.Drawing.Point(625, 58);
             this.btnAddTrack.Name = "btnAddTrack";
-            this.btnAddTrack.Size = new System.Drawing.Size(100, 23);
+            this.btnAddTrack.Size = new System.Drawing.Size(90, 23);
             this.btnAddTrack.TabIndex = 7;
             this.btnAddTrack.Text = "Add Track";
             this.btnAddTrack.UseVisualStyleBackColor = true;
@@ -187,9 +187,9 @@
             // btnExit
             // 
             this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnExit.Location = new System.Drawing.Point(740, 366);
+            this.btnExit.Location = new System.Drawing.Point(626, 361);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(100, 23);
+            this.btnExit.Size = new System.Drawing.Size(185, 23);
             this.btnExit.TabIndex = 9;
             this.btnExit.Text = "E&xit";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -197,9 +197,9 @@
             // 
             // btnClearAll
             // 
-            this.btnClearAll.Location = new System.Drawing.Point(634, 366);
+            this.btnClearAll.Location = new System.Drawing.Point(626, 331);
             this.btnClearAll.Name = "btnClearAll";
-            this.btnClearAll.Size = new System.Drawing.Size(100, 23);
+            this.btnClearAll.Size = new System.Drawing.Size(185, 23);
             this.btnClearAll.TabIndex = 8;
             this.btnClearAll.Text = "Clear All";
             this.btnClearAll.UseVisualStyleBackColor = true;
@@ -207,7 +207,7 @@
             // 
             // txtTrackNo
             // 
-            this.txtTrackNo.Location = new System.Drawing.Point(640, 32);
+            this.txtTrackNo.Location = new System.Drawing.Point(626, 32);
             this.txtTrackNo.Name = "txtTrackNo";
             this.txtTrackNo.Size = new System.Drawing.Size(31, 20);
             this.txtTrackNo.TabIndex = 6;
@@ -215,7 +215,7 @@
             // lblTrackNo
             // 
             this.lblTrackNo.AutoSize = true;
-            this.lblTrackNo.Location = new System.Drawing.Point(565, 35);
+            this.lblTrackNo.Location = new System.Drawing.Point(551, 35);
             this.lblTrackNo.Name = "lblTrackNo";
             this.lblTrackNo.Size = new System.Drawing.Size(48, 13);
             this.lblTrackNo.TabIndex = 11;
@@ -225,7 +225,7 @@
             // 
             this.btnViewAlbum.Location = new System.Drawing.Point(359, 331);
             this.btnViewAlbum.Name = "btnViewAlbum";
-            this.btnViewAlbum.Size = new System.Drawing.Size(100, 23);
+            this.btnViewAlbum.Size = new System.Drawing.Size(186, 23);
             this.btnViewAlbum.TabIndex = 12;
             this.btnViewAlbum.Text = "View Album";
             this.btnViewAlbum.UseVisualStyleBackColor = true;
@@ -233,9 +233,9 @@
             // 
             // btnDeleteBand
             // 
-            this.btnDeleteBand.Location = new System.Drawing.Point(172, 331);
+            this.btnDeleteBand.Location = new System.Drawing.Point(180, 58);
             this.btnDeleteBand.Name = "btnDeleteBand";
-            this.btnDeleteBand.Size = new System.Drawing.Size(100, 23);
+            this.btnDeleteBand.Size = new System.Drawing.Size(90, 23);
             this.btnDeleteBand.TabIndex = 13;
             this.btnDeleteBand.Text = "Delete Band";
             this.btnDeleteBand.UseVisualStyleBackColor = true;
@@ -243,9 +243,9 @@
             // 
             // btnDeleteAlbum
             // 
-            this.btnDeleteAlbum.Location = new System.Drawing.Point(459, 331);
+            this.btnDeleteAlbum.Location = new System.Drawing.Point(455, 58);
             this.btnDeleteAlbum.Name = "btnDeleteAlbum";
-            this.btnDeleteAlbum.Size = new System.Drawing.Size(100, 23);
+            this.btnDeleteAlbum.Size = new System.Drawing.Size(90, 23);
             this.btnDeleteAlbum.TabIndex = 14;
             this.btnDeleteAlbum.Text = "Delete Album";
             this.btnDeleteAlbum.UseVisualStyleBackColor = true;
@@ -253,9 +253,9 @@
             // 
             // btnDeleteTrack
             // 
-            this.btnDeleteTrack.Location = new System.Drawing.Point(740, 331);
+            this.btnDeleteTrack.Location = new System.Drawing.Point(721, 58);
             this.btnDeleteTrack.Name = "btnDeleteTrack";
-            this.btnDeleteTrack.Size = new System.Drawing.Size(100, 23);
+            this.btnDeleteTrack.Size = new System.Drawing.Size(90, 23);
             this.btnDeleteTrack.TabIndex = 15;
             this.btnDeleteTrack.Text = "Delete Track";
             this.btnDeleteTrack.UseVisualStyleBackColor = true;
@@ -266,7 +266,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(861, 408);
+            this.ClientSize = new System.Drawing.Size(828, 396);
             this.Controls.Add(this.btnDeleteTrack);
             this.Controls.Add(this.btnDeleteAlbum);
             this.Controls.Add(this.btnDeleteBand);

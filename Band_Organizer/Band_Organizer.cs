@@ -141,9 +141,9 @@ namespace Band_Organizer
                 newTrackList += $"{track.Key}\t{track.Value}\n";
             }
 
-            MessageBox.Show($"Band:\t{band}\n" +
-                            $"Album:\t{album}\n" +
-                            $"Tracks:\n" +
+            MessageBox.Show($"Band:\t{band}\n"                  +
+                            $"Album:\t{album}\n"                +
+                            $"Tracks:\n"                        +
                             $"{newTrackList}", "Album Data");
         }
 
