@@ -42,9 +42,9 @@ namespace Band_Organizer
 
                     Band newBand = new Band { 
                         BandName = txtBandName.Text };
-                    List<string> bandList = BandAlbumTrackDB.FetchBandData();
-
                     BandAlbumTrackDB.InsertBand(newBand);
+
+                    List<string> bandList = BandAlbumTrackDB.FetchBandData();                    
                     FillListBox(bandList, lbBandList, lbAlbumList, lbTrackList);
 
                     txtBandName.Clear();
@@ -74,9 +74,9 @@ namespace Band_Organizer
                         AlbumTitle = txtAlbumName.Text, 
                         ReleaseDate = dtReleaseDate.Value.ToLocalTime()};
                     string bandName = TrimString(lbBandList);
-                    List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
-
                     BandAlbumTrackDB.InsertAlbum(newAlbum, bandName);
+
+                    List<string> albumList = BandAlbumTrackDB.FetchAlbumData(bandName);
                     FillListBox(albumList, lbAlbumList, lbTrackList);
 
                     txtAlbumName.Clear();
@@ -108,10 +108,10 @@ namespace Band_Organizer
                         TrackNumber = Int32.Parse(txtTrackNo.Text)};
                     string bandName = TrimString(lbBandList);
                     string albumName = TrimString(lbAlbumList);
+                    BandAlbumTrackDB.InsertTrack(newTrack, bandName, albumName);
+
                     Dictionary<int, string> trackList =
                         BandAlbumTrackDB.FetchTrackData(bandName, albumName);
-
-                    BandAlbumTrackDB.InsertTrack(newTrack, bandName, albumName);
                     FillDictionary(trackList, lbTrackList);
 
                     txtTrackName.Clear();
@@ -248,11 +248,14 @@ namespace Band_Organizer
         {
             // deletes band (and associated albums and tracks) from database
 
-            string band = TrimString(lbBandList);
-            List<string> albumList = BandAlbumTrackDB.FetchAlbumData(band);
+            if (validate.IsSelected(lbBandList, "Band List"))
+            {
+                string band = TrimString(lbBandList);
+                BandAlbumTrackDB.DeleteBand(band);
 
-            BandAlbumTrackDB.DeleteBand(band);
-            FillListBox(albumList, lbBandList, lbAlbumList, lbTrackList);
+                List<string> bandList = BandAlbumTrackDB.FetchBandData();
+                FillListBox(bandList, lbBandList, lbAlbumList, lbTrackList);
+            }
         }
 
         private void btnDeleteAlbum_Click(object sender, EventArgs e)
