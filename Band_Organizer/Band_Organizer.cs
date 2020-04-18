@@ -154,20 +154,11 @@ namespace Band_Organizer
         {
             if (ClearAllData())
             {
+                // clears data from database, input boxes and listboxes
+
                 BandAlbumTrackDB.ClearAllData();
-
-                // clears all data from textboxes and listboxes
-
-                txtTrackNo.Clear();
-                txtBandName.Clear();
-                txtAlbumName.Clear();
-                txtTrackName.Clear();
-
-                dtReleaseDate.ResetText();
-
-                lbBandList.Items.Clear();
-                lbAlbumList.Items.Clear();
-                lbTrackList.Items.Clear();
+                ClearInput();
+                ClearListBoxes();
             }
         }
 
@@ -218,6 +209,8 @@ namespace Band_Organizer
         {
             // clears and refills band listbox when selected index changes
 
+            ClearInput();
+
             if (lbBandList.SelectedItem == null)
                 MessageBox.Show("Please select an item from the list.", 
                                 "Whoops");
@@ -232,6 +225,8 @@ namespace Band_Organizer
         private void lbAlbumList_SelectedIndexChanged(object sender, EventArgs e)
         {
             // clears and refills albums listbox when selected index changes
+
+            ClearInput();
 
             if (lbAlbumList.SelectedItem == null)
                 MessageBox.Show("Please select an item from the list.", 
@@ -297,6 +292,27 @@ namespace Band_Organizer
             // gets selected item from listBox and trim any space
 
             return listBox.SelectedItem.ToString().Trim();
+        }
+
+        private void ClearInput()
+        {
+            // clears all input boxes
+
+            txtTrackNo.Clear();
+            txtBandName.Clear();
+            txtAlbumName.Clear();
+            txtTrackName.Clear();
+
+            dtReleaseDate.ResetText();
+        }
+
+        private void ClearListBoxes()
+        {
+            // clears all listboxes
+
+            lbBandList.Items.Clear();
+            lbAlbumList.Items.Clear();
+            lbTrackList.Items.Clear();
         }
     }
 }
