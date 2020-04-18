@@ -48,7 +48,7 @@ namespace Band_Organizer
                     FillListBox(bandList, lbBandList, lbAlbumList, lbTrackList);
 
                     txtBandName.Clear();
-                    txtAlbumName.Focus();
+                    txtBandName.Focus();
                 }
             }
             catch(Exception ex)
@@ -81,7 +81,7 @@ namespace Band_Organizer
 
                     txtAlbumName.Clear();
                     dtReleaseDate.ResetText();
-                    txtTrackName.Focus();
+                    txtAlbumName.Focus();
                 }
             }
             catch(Exception ex)
