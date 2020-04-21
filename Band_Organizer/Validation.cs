@@ -55,6 +55,7 @@ namespace Band_Organizer
         public bool IsSelected(ListBox listBox, string name)
         {
             // checks to make sure a band or album is selected before entering more input
+
             if (listBox.SelectedIndex == -1)
             {
                 MessageBox.Show("You must make a selection from " + name, "Entry Error");
@@ -66,11 +67,12 @@ namespace Band_Organizer
 
         public bool IsInDictionary(ListBox listBox, string track)
         {
-            //string[] newTrack = track.Split('\t');
+            // checks to make sure track numbers are not added more than once per album
+
             foreach (string item in listBox.Items)
             {
-                string[] newArray = item.ToString().Split('\t');
-                if (newArray[0] == track)
+                string[] newItem = item.ToString().Split('\t');
+                if (newItem[0] == track)
                 {
                     MessageBox.Show("There is already a Track with that Track Number.",
                                     "Input Error");
