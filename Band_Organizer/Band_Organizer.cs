@@ -99,6 +99,7 @@ namespace Band_Organizer
                 if (validate.IsInt(txtTrackNo)                              &&
                     validate.IsInList(txtTrackName, lbTrackList)            &&
                     validate.IsPresent(txtTrackName, "Track Name")          &&
+                    validate.IsInDictionary(lbTrackList, txtTrackNo.Text)   &&
                     validate.IsSelected(lbAlbumList, lblAlbumName.Text))
                 {
                     // track name is added to the listbox then the textbox is cleared

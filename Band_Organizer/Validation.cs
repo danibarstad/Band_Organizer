@@ -63,5 +63,21 @@ namespace Band_Organizer
             else
                 return true;
         }
+
+        public bool IsInDictionary(ListBox listBox, string track)
+        {
+            //string[] newTrack = track.Split('\t');
+            foreach (string item in listBox.Items)
+            {
+                string[] newArray = item.ToString().Split('\t');
+                if (newArray[0] == track)
+                {
+                    MessageBox.Show("There is already a Track with that Track Number.",
+                                    "Input Error");
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
