@@ -1,6 +1,6 @@
 ### Band Discography Organizer
 
-Windows form for musicians to input any and all of the bands they’ve been in, enter the albums associated with each band and tracks associated with each album.
+Windows form application for musicians to input bands, albums, and musical tracks to organize their discographies.
 
 ![pic1](https://github.com/danibarstad/band_organizer/blob/master/images/pic4.JPG)
 
